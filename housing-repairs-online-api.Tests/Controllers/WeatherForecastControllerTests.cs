@@ -1,4 +1,4 @@
-using Xunit;
+﻿using Xunit;
 
 namespace housing_repairs_online_api.Tests.Controllers
 {
@@ -7,7 +7,7 @@ namespace housing_repairs_online_api.Tests.Controllers
         [Fact]
         public void Test1()
         {
-            
+            Assert.True(true);
         }
     }
 }
