@@ -25,6 +25,7 @@ jobs:
       - name: Test
         run: dotnet test --no-build --verbosity normal
   build:
+    needs: test
     name: Build
     runs-on: ubuntu-latest
     steps:
