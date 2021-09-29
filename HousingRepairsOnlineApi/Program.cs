@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace housing_repairs_online_api
+namespace HousingRepairsOnlineApi
 {
     public class Program
     {

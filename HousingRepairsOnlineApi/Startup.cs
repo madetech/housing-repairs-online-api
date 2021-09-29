@@ -12,7 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 
-namespace housing_repairs_online_api
+namespace HousingRepairsOnlineApi
 {
     public class Startup
     {
@@ -30,7 +30,7 @@ namespace housing_repairs_online_api
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "housing_repairs_online_api", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "HousingRepairsOnlineApi", Version = "v1" });
             });
         }
 
@@ -41,7 +41,7 @@ namespace housing_repairs_online_api
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "housing_repairs_online_api v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "HousingRepairsOnlineApi v1"));
             }
 
             app.UseHttpsRedirection();

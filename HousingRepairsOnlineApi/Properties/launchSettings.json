@@ -4,8 +4,8 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:24903",
-      "sslPort": 44390
+      "applicationUrl": "http://localhost:55268",
+      "sslPort": 44378
     }
   },
   "profiles": {
@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "housing_repairs_online_api": {
+    "HousingRepairsOnlineApi": {
       "commandName": "Project",
       "dotnetRunMessages": "true",
       "launchBrowser": true,

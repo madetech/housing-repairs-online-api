@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace housing_repairs_online_api.Controllers
+namespace HousingRepairsOnlineApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]

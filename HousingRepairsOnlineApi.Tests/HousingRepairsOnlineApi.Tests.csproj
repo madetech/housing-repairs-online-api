@@ -1,8 +1,7 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <RootNamespace>housing_repairs_online_api.Tests</RootNamespace>
 
     <IsPackable>false</IsPackable>
   </PropertyGroup>
@@ -21,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\housing-repairs-online-api\housing-repairs-online-api.csproj" />
+    <ProjectReference Include="..\HousingRepairsOnlineApi\HousingRepairsOnlineApi.csproj" />
   </ItemGroup>
 
 </Project>

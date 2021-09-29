@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <RootNamespace>housing_repairs_online_api</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
