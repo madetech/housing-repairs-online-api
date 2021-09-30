@@ -4,9 +4,8 @@
 name: Build and deploy ASP.Net Core app to Azure Web App - housing-repairs-online-api
 
 on:
-  push:
-    branches:
-      - main
+  pull_request:
+    types: [ opened ]
   workflow_dispatch:
 
 jobs:
