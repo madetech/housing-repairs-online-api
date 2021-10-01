@@ -64,5 +64,5 @@ jobs:
         with:
           app-name: 'housing-repairs-online-api'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_LINCOLN }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_A7BC88C724A54F3D83D70DF7AF8EC4C7 }}
           package: .
