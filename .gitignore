@@ -455,3 +455,6 @@ $RECYCLE.BIN/
 
 ## Local tools
 ./local-tools/
+
+## Git files
+.gitmessage
