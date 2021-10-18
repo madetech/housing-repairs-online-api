@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Net.Http;
+using HousingRepairsOnlineApi.Gateways;
 using HousingRepairsOnlineApi.UseCases;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 
 namespace HousingRepairsOnlineApi
@@ -29,6 +25,11 @@ namespace HousingRepairsOnlineApi
         {
 
             services.AddTransient<IRetrieveAddressesUseCase, RetrieveAddressesUseCase>();
+            var addressesApiUrl = Environment.GetEnvironmentVariable("ADDRESSES_API_URL");
+            Console.WriteLine(addressesApiUrl);
+            Console.WriteLine("addressesApiUrl");
+            var httpClient = new HttpClient();
+            services.AddTransient<IAddressGateway, AddressGateway>(s=> new AddressGateway(httpClient, addressesApiUrl));
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

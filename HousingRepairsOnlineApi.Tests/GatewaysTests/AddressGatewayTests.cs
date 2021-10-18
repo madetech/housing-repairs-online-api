@@ -15,7 +15,8 @@ namespace HousingRepairsOnlineApi.Tests.GatewaysTests
         public AddressGatewayTests()
         {
             mockHttp = new MockHttpMessageHandler();
-            addressGateway = new AddressGateway(mockHttp.ToHttpClient());
+            var addressApiEndpoint = "https://our-porxy-UH.api";
+            addressGateway = new AddressGateway(mockHttp.ToHttpClient(), addressApiEndpoint);
         }
 
         [Fact]

@@ -12,5 +12,5 @@ lint:
 	./local-tools/dotnet-format/dotnet-format
 
 .PHONY: run
-run:
-	dotnet run --project HousingRepairsOnlineApi
+run: build
+	source ./.env && dotnet run --project HousingRepairsOnlineApi

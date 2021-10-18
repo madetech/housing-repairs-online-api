@@ -458,3 +458,6 @@ local-tools/
 
 ## Git files
 .gitmessage
+
+##Environment vars
+.env
