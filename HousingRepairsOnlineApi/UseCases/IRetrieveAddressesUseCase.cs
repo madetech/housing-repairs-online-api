@@ -2,6 +2,6 @@
 {
     public interface IRetrieveAddressesUseCase
     {
-        object Execute();
+        object[] Execute();
     }
 }
