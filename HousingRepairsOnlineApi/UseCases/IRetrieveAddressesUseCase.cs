@@ -1,7 +1,10 @@
-﻿namespace HousingRepairsOnlineApi.UseCases
+﻿using System.Collections.Generic;
+using HousingRepairsOnlineApi.Domain;
+
+namespace HousingRepairsOnlineApi.UseCases
 {
     public interface IRetrieveAddressesUseCase
     {
-        object[] Execute();
+        List<Address> Execute();
     }
 }
