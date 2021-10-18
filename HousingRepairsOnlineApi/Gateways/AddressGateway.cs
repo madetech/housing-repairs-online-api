@@ -13,7 +13,10 @@ namespace HousingRepairsOnlineApi.Gateways
 
         public IEnumerable<object> Search(string postcode)
         {
-            throw new System.NotImplementedException();
+            var request = new HttpRequestMessage(HttpMethod.Get,
+                "http://localhost/api/user/*");
+            httpClient.SendAsync(request);
+            return null;
         }
     }
 }
