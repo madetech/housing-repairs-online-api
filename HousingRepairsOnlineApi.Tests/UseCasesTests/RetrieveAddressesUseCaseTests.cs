@@ -38,7 +38,7 @@ namespace HousingRepairsOnlineApi.Tests.UseCasesTests
         public void DoesNotReturnAnEmptyCollectionOfAddresses()
         {
             const string TestPostcode = "M3 0W";
-            addressGatewayMock.Setup(x => x.Search(It.IsAny<String>())).Returns(new Address[]{new Address()});
+            addressGatewayMock.Setup(x => x.Search(It.IsAny<string>())).Returns(new Address[] { new Address() });
             var data = sytemUndertest.Execute(postcode: TestPostcode);
             data.Should().NotBeEmpty();
         }
