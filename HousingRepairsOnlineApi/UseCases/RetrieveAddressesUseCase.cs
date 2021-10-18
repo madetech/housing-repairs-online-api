@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using HousingRepairsOnlineApi.Domain;
 using HousingRepairsOnlineApi.Gateways;
 
@@ -16,7 +17,17 @@ namespace HousingRepairsOnlineApi.UseCases
 
         public IEnumerable<Address> Execute(string postcode)
         {
-            return Array.Empty<Address>();
+            if (postcode == null)
+            {
+                throw new ArgumentNullException(nameof(postcode));
+            }
+            var result = new List<Address>();
+            if (!string.IsNullOrEmpty(postcode))
+            {
+                var addresses = addressGateway.Search(postcode);
+                result.AddRange(addresses.Select(address => new Address()));
+            }
+            return result;
         }
     }
 }

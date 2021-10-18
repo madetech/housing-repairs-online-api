@@ -1,7 +1,9 @@
-﻿namespace HousingRepairsOnlineApi.Gateways
+﻿using System.Collections.Generic;
+
+namespace HousingRepairsOnlineApi.Gateways
 {
     public interface IAddressGateway
     {
-        void Search(string postcode);
+        IEnumerable<object> Search(string postcode);
     }
 }
