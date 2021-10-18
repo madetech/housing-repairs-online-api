@@ -18,7 +18,8 @@ namespace HousingRepairsOnlineApi.Controllers
         [HttpGet]
         public async Task<IActionResult> Addresses()
         {
-            var result = retrieveAddressesUseCase.Execute();
+            // TODO: add tests ensuring that query params are passed to the usecase
+            var result = retrieveAddressesUseCase.Execute("");
             return Ok();
         }
     }

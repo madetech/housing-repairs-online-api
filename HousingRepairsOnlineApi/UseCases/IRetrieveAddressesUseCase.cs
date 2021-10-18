@@ -5,6 +5,6 @@ namespace HousingRepairsOnlineApi.UseCases
 {
     public interface IRetrieveAddressesUseCase
     {
-        List<Address> Execute();
+        IEnumerable<Address> Execute(string postcode);
     }
 }

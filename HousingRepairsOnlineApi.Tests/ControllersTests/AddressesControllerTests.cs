@@ -24,7 +24,7 @@ namespace HousingRepairsOnlineApi.Tests
             var result = await sytemUndertest.Addresses();
 
             GetStatusCode(result).Should().Be(200);
-            retrieveAddressesUseCaseMock.Verify(x => x.Execute(), Times.Once);
+            retrieveAddressesUseCaseMock.Verify(x => x.Execute(""), Times.Once);
         }
     }
 }
