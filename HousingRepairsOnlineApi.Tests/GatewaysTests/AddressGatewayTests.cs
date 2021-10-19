@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using HousingRepairsOnlineApi.Gateways;
@@ -41,7 +43,7 @@ namespace HousingRepairsOnlineApi.Tests.GatewaysTests
         public async Task DataFromApiIsReturned()
         {
             // Arrange
-            const string Postcode = "M3 OW";
+            const string Postcode = "M3 0W";
 
             mockHttp.Expect($"https://our-porxy-UH.api/address?postcode={Postcode}")
                 .WithHeaders("X-API-Key", "super secret")
@@ -65,7 +67,25 @@ namespace HousingRepairsOnlineApi.Tests.GatewaysTests
 
             // Assert
             mockHttp.VerifyNoOutstandingExpectation();
-            // Assert.Equal(, data);
+            Assert.Equal(1, data.Count());
+            Assert.Equal(Postcode, data.First().PostalCode);
+        }
+
+        [Fact]
+        public async Task EmptryIsReturnedWhenApiIsDown()
+        {
+            // Arrange
+            const string Postcode = "M3 0W";
+
+            mockHttp.Expect($"https://our-porxy-UH.api/address?postcode={Postcode}")
+                .WithHeaders("X-API-Key", "super secret")
+                .Respond(statusCode: (HttpStatusCode)503);
+            // Act
+            var data = await addressGateway.Search(Postcode);
+
+            // Assert
+            mockHttp.VerifyNoOutstandingExpectation();
+            Assert.Equal(0, data.Count());
         }
 
     }

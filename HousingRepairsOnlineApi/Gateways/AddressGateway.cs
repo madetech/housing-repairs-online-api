@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
@@ -27,7 +28,14 @@ namespace HousingRepairsOnlineApi.Gateways
                 $"{addressesApiUrl}/address?postcode={postcode}");
             request.Headers.Add("X-API-Key", addressesApiKey);
             var response = await httpClient.SendAsync(request);
-            return await response.Content.ReadFromJsonAsync<List<PropertyAddress>>();
+
+            var data = new List<PropertyAddress>();
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                data = await response.Content.ReadFromJsonAsync<List<PropertyAddress>>();
+            }
+
+            return data;
         }
     }
 }
