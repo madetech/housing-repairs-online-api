@@ -44,7 +44,8 @@ namespace HousingRepairsOnlineApi.Tests.GatewaysTests
             const string Postcode = "M3 OW";
 
             mockHttp.Expect($"https://our-porxy-UH.api/address?postcode={Postcode}")
-                .WithHeaders("X-API-Key", "super secret").Respond("application/json",
+                .WithHeaders("X-API-Key", "super secret")
+                .Respond("application/json",
                     "[{ \"UPRN\": \"944225244413\", " +
                     "\"Postbox\": \"null\", " +
                     "\"Room\": \"null\", " +
@@ -56,8 +57,7 @@ namespace HousingRepairsOnlineApi.Tests.GatewaysTests
                     "\"ComplexName\": \"null\", " +
                     "\"StreetName\": \"Cute Street\", " +
                     "\"CityName\": \"New Meow City\", " +
-                    // "\"Country\": \"null\", " +
-                    "\"AddressLine\": \"123 Cute Street\", " +
+                    "\"AddressLine\": [\"123 Cute Street\"], " +
                     "\"Type\": \"null\", " +
                     "\"PostalCode\": \"M3 0W\"}]");
             // Act
