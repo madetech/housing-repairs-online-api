@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using HACT.Dtos;
 
 namespace HousingRepairsOnlineApi.Gateways
 {
     public interface IAddressGateway
     {
-        IEnumerable<object> Search(string postcode);
+        Task<IEnumerable<PropertyAddress>> Search(string postcode);
     }
 }

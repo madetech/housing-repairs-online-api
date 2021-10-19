@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Threading.Tasks;
 using FluentAssertions;
-using HousingRepairsOnlineApi.Domain;
+using HACT.Dtos;
 using HousingRepairsOnlineApi.Gateways;
 using HousingRepairsOnlineApi.UseCases;
 using Moq;
 using Xunit;
+using Address = HousingRepairsOnlineApi.Domain.Address;
 
 namespace HousingRepairsOnlineApi.Tests.UseCasesTests
 {
@@ -20,9 +22,9 @@ namespace HousingRepairsOnlineApi.Tests.UseCasesTests
         }
 
         [Fact]
-        public void ReturnsEmptyWhenNoAddressesAreFound()
+        public async Task ReturnsEmptyWhenNoAddressesAreFound()
         {
-            var data = sytemUndertest.Execute("");
+            var data = await sytemUndertest.Execute("");
             data.Should().BeEmpty();
         }
 
@@ -35,11 +37,12 @@ namespace HousingRepairsOnlineApi.Tests.UseCasesTests
         }
 
         [Fact]
-        public void DoesNotReturnAnEmptyCollectionOfAddresses()
+        public async Task DoesNotReturnAnEmptyCollectionOfAddresses()
         {
             const string TestPostcode = "M3 0W";
-            addressGatewayMock.Setup(x => x.Search(It.IsAny<string>())).Returns(new Address[] { new Address() });
-            var data = sytemUndertest.Execute(postcode: TestPostcode);
+            addressGatewayMock.Setup(x => x.Search(It.IsAny<string>()))
+                .ReturnsAsync(new PropertyAddress[] { new PropertyAddress() });
+            var data = await sytemUndertest.Execute(postcode: TestPostcode);
             data.Should().NotBeEmpty();
         }
 
@@ -47,8 +50,8 @@ namespace HousingRepairsOnlineApi.Tests.UseCasesTests
         public void ThrowsNullExceptionWhenPostcodeIsNull()
         {
             const string TestPostcode = null;
-            Action act = () => sytemUndertest.Execute(TestPostcode);
-            act.Should().Throw<ArgumentNullException>();
+            Func<Task> act = async () => await sytemUndertest.Execute(TestPostcode);
+            act.Should().ThrowAsync<ArgumentNullException>();
         }
 
         [Fact]

@@ -26,9 +26,11 @@ namespace HousingRepairsOnlineApi
 
             services.AddTransient<IRetrieveAddressesUseCase, RetrieveAddressesUseCase>();
             var addressesApiUrl = Environment.GetEnvironmentVariable("ADDRESSES_API_URL");
+            var addressApiKey = Environment.GetEnvironmentVariable("ADDRESSES_API_KEY");
             // TODO: Rework instantiating HttpClient directly
             var httpClient = new HttpClient();
-            services.AddTransient<IAddressGateway, AddressGateway>(s=> new AddressGateway(httpClient, addressesApiUrl));
+            services.AddTransient<IAddressGateway, AddressGateway>(s=> new AddressGateway(
+                httpClient, addressesApiUrl, addressApiKey));
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

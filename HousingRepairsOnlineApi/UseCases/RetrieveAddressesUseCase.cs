@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using HousingRepairsOnlineApi.Domain;
 using HousingRepairsOnlineApi.Gateways;
 
@@ -15,7 +16,7 @@ namespace HousingRepairsOnlineApi.UseCases
             this.addressGateway = addressGateway;
         }
 
-        public IEnumerable<Address> Execute(string postcode)
+        public async Task<IEnumerable<Address>> Execute(string postcode)
         {
             if (postcode == null)
             {
@@ -24,7 +25,7 @@ namespace HousingRepairsOnlineApi.UseCases
             var result = new List<Address>();
             if (!string.IsNullOrEmpty(postcode))
             {
-                var addresses = addressGateway.Search(postcode);
+                var addresses = await addressGateway.Search(postcode);
                 result.AddRange(addresses.Select(address => new Address()));
             }
             return result;

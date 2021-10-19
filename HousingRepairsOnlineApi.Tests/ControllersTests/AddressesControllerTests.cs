@@ -21,10 +21,11 @@ namespace HousingRepairsOnlineApi.Tests
         [Fact]
         public async Task TestEndpoint()
         {
-            var result = await sytemUndertest.Addresses();
+            const string Postcode = "M3 0W";
+            var result = await sytemUndertest.Addresses(Postcode);
 
             GetStatusCode(result).Should().Be(200);
-            retrieveAddressesUseCaseMock.Verify(x => x.Execute(""), Times.Once);
+            retrieveAddressesUseCaseMock.Verify(x => x.Execute(Postcode), Times.Once);
         }
     }
 }
