@@ -14,7 +14,7 @@ namespace HousingRepairsOnlineApi.Gateways
         private readonly string addressesApiUrl;
         private readonly string addressesApiKey;
 
-        public AddressGateway(HttpClient httpClient, string addressesApiUrl, string  addressesApiKey)
+        public AddressGateway(HttpClient httpClient, string addressesApiUrl, string addressesApiKey)
         {
             this.httpClient = httpClient;
             this.addressesApiUrl = addressesApiUrl;

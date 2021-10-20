@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
 using HACT.Dtos;
@@ -6,7 +9,6 @@ using HousingRepairsOnlineApi.Gateways;
 using HousingRepairsOnlineApi.UseCases;
 using Moq;
 using Xunit;
-using Address = HousingRepairsOnlineApi.Domain.Address;
 
 namespace HousingRepairsOnlineApi.Tests.UseCasesTests
 {
@@ -41,9 +43,27 @@ namespace HousingRepairsOnlineApi.Tests.UseCasesTests
         {
             const string TestPostcode = "M3 0W";
             addressGatewayMock.Setup(x => x.Search(It.IsAny<string>()))
-                .ReturnsAsync(new PropertyAddress[] { new PropertyAddress() });
+                .ReturnsAsync(new List<PropertyAddress>());
             var data = await sytemUndertest.Execute(postcode: TestPostcode);
-            data.Should().NotBeEmpty();
+            Assert.Empty(data);
+        }
+
+        [Fact]
+        public async Task ReturnACollectionOfAddresses()
+        {
+            const string TestPostcode = "M3 0W";
+            var testAddress = new PropertyAddress()
+            {
+                AddressLine = new Collection<string>() { "123 cute street" },
+                PostalCode = TestPostcode,
+                CityName = "New Meow City"
+            };
+            addressGatewayMock.Setup(x => x.Search(It.IsAny<string>()))
+                .ReturnsAsync(new List<PropertyAddress>() { testAddress });
+            var data = await sytemUndertest.Execute(postcode: TestPostcode);
+            Assert.Equal(data.First().AddressLine1, testAddress.AddressLine.First());
+            Assert.Equal(data.First().AddressLine2, testAddress.CityName);
+            Assert.Equal(data.First().PostCode, TestPostcode);
         }
 
         [Fact]
