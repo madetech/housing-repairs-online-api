@@ -26,9 +26,20 @@ namespace HousingRepairsOnlineApi.UseCases
             if (!string.IsNullOrEmpty(postcode))
             {
                 var addresses = await addressGateway.Search(postcode);
-                result.AddRange(addresses.Select(address => new Address()));
+                result.AddRange(addresses.Select(address => new Address(){
+                        Uprn = "",
+                        AddressLine1 = address.AddressLine.First(),
+                        AddressLine2 = address.CityName,
+                        PostCode = address.PostalCode
+                    }
+                ));
             }
             return result;
         }
     }
 }
+
+// "uprn": null,
+// "addressLine1": null,
+// "addressLine2": null,
+// "postCode": null
