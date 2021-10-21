@@ -36,6 +36,7 @@ namespace HousingRepairsOnlineApi.Tests.GatewaysTests
 
             // Assert
             mockHttp.VerifyNoOutstandingExpectation();
+            Assert.True(false);
         }
 
         [Fact]
