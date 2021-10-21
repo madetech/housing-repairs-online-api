@@ -18,7 +18,6 @@ namespace HousingRepairsOnlineApi.Controllers
         [HttpGet]
         public async Task<IActionResult> Addresses([FromQuery] string postcode)
         {
-            // TODO: add tests ensuring that query params are passed to the usecase
             var result = await retrieveAddressesUseCase.Execute(postcode);
             return Ok(result);
         }
