@@ -66,7 +66,7 @@ namespace HousingRepairsOnlineApi.Tests.GatewaysTests
 
             // Assert
             mockHttp.VerifyNoOutstandingExpectation();
-            Assert.Equal(1, data.Count());
+            Assert.Single(data);
             Assert.Equal(Postcode, data.First().PostalCode);
         }
 
@@ -84,7 +84,7 @@ namespace HousingRepairsOnlineApi.Tests.GatewaysTests
 
             // Assert
             mockHttp.VerifyNoOutstandingExpectation();
-            Assert.Equal(0, data.Count());
+            Assert.Empty(data);
         }
 
     }
