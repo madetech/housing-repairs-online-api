@@ -84,7 +84,7 @@ namespace HousingRepairsOnlineApi.Tests.GatewaysTests
 
             // Assert
             mockHttp.VerifyNoOutstandingExpectation();
-            Assert.Equal(0, data.Count());
+            Assert.Empty(data);
         }
 
     }
