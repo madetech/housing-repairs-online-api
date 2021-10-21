@@ -18,8 +18,8 @@ namespace HousingRepairsOnlineApi.Tests.GatewaysTests
         public AddressGatewayTests()
         {
             mockHttp = new MockHttpMessageHandler();
-            var addressApiEndpoint = "https://our-porxy-UH.api";
-            var addressApiKey = "super secret";
+            const string addressApiEndpoint = "https://our-porxy-UH.api";
+            const string addressApiKey = "super secret";
             addressGateway = new AddressGateway(mockHttp.ToHttpClient(), addressApiEndpoint, addressApiKey);
         }
 
