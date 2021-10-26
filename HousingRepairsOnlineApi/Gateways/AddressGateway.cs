@@ -25,7 +25,7 @@ namespace HousingRepairsOnlineApi.Gateways
         {
             Console.WriteLine(addressesApiUrl);
             var request = new HttpRequestMessage(HttpMethod.Get,
-                $"{addressesApiUrl}/address?postcode={postcode}");
+                $"{addressesApiUrl}/addresses?postcode={postcode}");
             request.Headers.Add("X-API-Key", addressesApiKey);
             var response = await httpClient.SendAsync(request);
 

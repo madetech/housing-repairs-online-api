@@ -67,11 +67,11 @@ namespace HousingRepairsOnlineApi.Tests.UseCasesTests
         }
 
         [Fact]
-        public void ThrowsNullExceptionWhenPostcodeIsNull()
+        public async void ThrowsNullExceptionWhenPostcodeIsNull()
         {
             const string TestPostcode = null;
             Func<Task> act = async () => await sytemUndertest.Execute(TestPostcode);
-            act.Should().ThrowAsync<ArgumentNullException>();
+            await act.Should().ThrowAsync<ArgumentNullException>();
         }
 
         [Fact]
