@@ -29,7 +29,7 @@ namespace HousingRepairsOnlineApi.Tests.GatewaysTests
             // Arrange
             const string Postcode = "M3 OW";
 
-            mockHttp.Expect($"https://our-porxy-UH.api/address?postcode={Postcode}")
+            mockHttp.Expect($"https://our-porxy-UH.api/addresses?postcode={Postcode}")
                 .WithHeaders("X-API-Key", "super secret");
             // Act
             _ = addressGateway.Search(Postcode);
@@ -44,7 +44,7 @@ namespace HousingRepairsOnlineApi.Tests.GatewaysTests
             // Arrange
             const string Postcode = "M3 0W";
 
-            mockHttp.Expect($"https://our-porxy-UH.api/address?postcode={Postcode}")
+            mockHttp.Expect($"https://our-porxy-UH.api/addresses?postcode={Postcode}")
                 .WithHeaders("X-API-Key", "super secret")
                 .Respond("application/json",
                     "[{ \"UPRN\": \"944225244413\", " +
@@ -76,7 +76,7 @@ namespace HousingRepairsOnlineApi.Tests.GatewaysTests
             // Arrange
             const string Postcode = "M3 0W";
 
-            mockHttp.Expect($"https://our-porxy-UH.api/address?postcode={Postcode}")
+            mockHttp.Expect($"https://our-porxy-UH.api/addresses?postcode={Postcode}")
                 .WithHeaders("X-API-Key", "super secret")
                 .Respond(statusCode: (HttpStatusCode)503);
             // Act
