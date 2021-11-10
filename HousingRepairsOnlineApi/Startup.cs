@@ -30,11 +30,11 @@ namespace HousingRepairsOnlineApi
             services.AddSoREngine("SoRConfig.json");
 
             services.AddTransient<IRetrieveAddressesUseCase, RetrieveAddressesUseCase>();
-            var addressesApiUrl = Environment.GetEnvironmentVariable("ADDRESSES_API_URL");
-            var addressApiKey = Environment.GetEnvironmentVariable("ADDRESSES_API_KEY");
+            var addressesApiUrl = GetEnvironmentVariable("ADDRESSES_API_URL");
+            var authenticationIdentifier = GetEnvironmentVariable("AUTHENTICATION_IDENTIFIER");
             services.AddHttpClient();
             services.AddTransient<IAddressGateway, AddressGateway>(s => new AddressGateway(
-                s.GetService<HttpClient>(), addressesApiUrl, addressApiKey));
+                s.GetService<HttpClient>(), addressesApiUrl, authenticationIdentifier));
 
             services.AddHousingRepairsOnlineAuthentication(HousingRepairsOnlineApiIssuerId);
 
