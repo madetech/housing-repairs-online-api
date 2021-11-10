@@ -23,7 +23,7 @@ namespace HousingRepairsOnlineApi.Tests.GatewaysTests
             mockHttp = new MockHttpMessageHandler();
 
             mockHttp.Expect($"{AddressApiEndpoint}/authentication?identifier={authenticationIdentifier}")
-                .Respond(HttpStatusCode.OK, x =>new StringContent(Token));
+                .Respond(HttpStatusCode.OK, x => new StringContent(Token));
 
             addressGateway = new AddressGateway(mockHttp.ToHttpClient(), AddressApiEndpoint, authenticationIdentifier);
         }
@@ -36,7 +36,7 @@ namespace HousingRepairsOnlineApi.Tests.GatewaysTests
 
             mockHttp.Expect($"{AddressApiEndpoint}/addresses?postcode={Postcode}")
                 .WithHeaders("Authorization", $"Bearer {Token}")
-                .Respond(HttpStatusCode.OK, x=> new StringContent("[]"));
+                .Respond(HttpStatusCode.OK, x => new StringContent("[]"));
 
             // Act
             _ = await addressGateway.Search(Postcode);

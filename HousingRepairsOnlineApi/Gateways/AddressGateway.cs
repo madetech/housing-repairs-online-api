@@ -29,7 +29,7 @@ namespace HousingRepairsOnlineApi.Gateways
                 $"{addressesApiUrl}/addresses?postcode={postcode}");
 
             var token = await httpClient.RetrieveAuthenticationToken(addressesApiUrl, authenticationIdentifier);
-            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer",$"{token}");
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", $"{token}");
 
             var response = await httpClient.SendAsync(request);
 
