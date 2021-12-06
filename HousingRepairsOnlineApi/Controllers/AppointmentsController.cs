@@ -14,7 +14,9 @@ namespace HousingRepairsOnlineApi.Controllers
         {
             this.retrieveAvailableAppointmentsUseCase = retrieveAvailableAppointmentsUseCase;
         }
+
         [HttpGet]
+        [Route("AvailableAppointments")]
         public async Task<IActionResult> AvailableAppointments([FromQuery] string repairLocation, [FromQuery] string repairProblem, [FromQuery] string repairIssue, [FromQuery] string uprn)
         {
             var result = await retrieveAvailableAppointmentsUseCase.Execute(repairLocation, repairProblem, repairIssue, uprn);
