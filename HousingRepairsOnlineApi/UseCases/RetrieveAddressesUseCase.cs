@@ -42,7 +42,7 @@ namespace HousingRepairsOnlineApi.UseCases
 
                 return new Address
                 {
-                    Uprn = address.Reference?.ID,
+                    LocationId = address.Reference?.ID,
                     AddressLine1 = addressLine1,
                     AddressLine2 = address.CityName,
                     PostCode = address.PostalCode
