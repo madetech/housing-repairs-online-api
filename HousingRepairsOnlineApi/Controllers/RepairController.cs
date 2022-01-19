@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using HousingRepairsOnlineApi.Domain;
+using HousingRepairsOnlineApi.Helpers;
 using HousingRepairsOnlineApi.UseCases;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,10 +12,15 @@ namespace HousingRepairsOnlineApi.Controllers
     public class RepairController : ControllerBase
     {
         private readonly ISaveRepairRequestUseCase saveRepairRequestUseCase;
+        private readonly IAppointmentConfirmationSender appointmentConfirmationSender;
 
-        public RepairController(ISaveRepairRequestUseCase saveRepairRequestUseCase)
+        public RepairController(
+            ISaveRepairRequestUseCase saveRepairRequestUseCase,
+            IAppointmentConfirmationSender appointmentConfirmationSender
+            )
         {
             this.saveRepairRequestUseCase = saveRepairRequestUseCase;
+            this.appointmentConfirmationSender = appointmentConfirmationSender;
         }
 
         [HttpPost]
@@ -23,6 +29,7 @@ namespace HousingRepairsOnlineApi.Controllers
             try
             {
                 var result = await saveRepairRequestUseCase.Execute(repairRequest);
+                appointmentConfirmationSender.Execute(repairRequest, result);
 
                 return Ok(result);
             }

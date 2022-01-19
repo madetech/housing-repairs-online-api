@@ -79,6 +79,8 @@ namespace HousingRepairsOnlineApi
                 return new SendAppointmentConfirmationEmailUseCase(notifyGateway, emailConfirmationTemplateId);
             });
 
+            services.AddTransient<IAppointmentConfirmationSender, AppointmentConfirmationSender>();
+
             services.AddHousingRepairsOnlineAuthentication(HousingRepairsOnlineApiIssuerId);
             services.AddTransient<ISaveRepairRequestUseCase, SaveRepairRequestUseCase>();
 
