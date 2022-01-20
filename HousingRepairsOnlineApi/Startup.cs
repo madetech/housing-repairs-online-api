@@ -67,6 +67,12 @@ namespace HousingRepairsOnlineApi
 
             var emailConfirmationTemplateId = GetEnvironmentVariable("CONFIRMATION_EMAIL_NOTIFY_TEMPLATE_ID");
 
+            var internalEmailConfirmationTemplateId = GetEnvironmentVariable("INTERNAL_EMAIL_NOTIFY_TEMPLATE_ID");
+
+            var internalEmail = GetEnvironmentVariable("INTERNAL_EMAIL");
+
+            var daysUntilImageExpiry = GetEnvironmentVariable("DAYS_UNTIL_IMAGE_EXPIRY");
+
             services.AddTransient<ISendAppointmentConfirmationSmsUseCase, SendAppointmentConfirmationSmsUseCase>(s =>
             {
                 var notifyGateway = s.GetService<INotifyGateway>();
@@ -80,6 +86,18 @@ namespace HousingRepairsOnlineApi
             });
 
             services.AddTransient<IAppointmentConfirmationSender, AppointmentConfirmationSender>();
+
+            services.AddTransient<IRetrieveImageLinkUseCase, RetrieveImageLinkUseCase>(s =>
+            {
+                var azureStorageGateway = s.GetService<IBlobStorageGateway>();
+                return new RetrieveImageLinkUseCase(azureStorageGateway, Int32.Parse(daysUntilImageExpiry));
+            });
+
+            services.AddTransient<ISendInternalEmailUseCase, SendInternalEmailUseCase>(s =>
+            {
+                var notifyGateway = s.GetService<INotifyGateway>();
+                return new SendInternalEmailUseCase(notifyGateway, internalEmailConfirmationTemplateId, internalEmail);
+            });
 
             services.AddHousingRepairsOnlineAuthentication(HousingRepairsOnlineApiIssuerId);
             services.AddTransient<ISaveRepairRequestUseCase, SaveRepairRequestUseCase>();

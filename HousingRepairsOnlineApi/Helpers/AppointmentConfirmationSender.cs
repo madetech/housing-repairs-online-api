@@ -16,19 +16,19 @@ namespace HousingRepairsOnlineApi.Helpers
             this.sendAppointmentConfirmationSmsUseCase = sendAppointmentConfirmationSmsUseCase;
         }
 
-        public async Task Execute(RepairRequest repairRequest, string repairId)
+        public void Execute(Repair repair)
         {
-            switch (repairRequest?.ContactDetails?.Type)
+            switch (repair?.ContactDetails?.Type)
             {
                 case AppointmentConfirmationSendingTypes.Email:
-                    sendAppointmentConfirmationEmailUseCase.Execute(repairRequest.ContactDetails.Value, repairId, repairRequest.Time.Display);
+                    sendAppointmentConfirmationEmailUseCase.Execute(repair.ContactDetails.Value, repair.Id, repair.Time.Display);
                     break;
                 case AppointmentConfirmationSendingTypes.Sms:
-                    sendAppointmentConfirmationSmsUseCase.Execute(repairRequest.ContactDetails.Value, repairId,
-                        repairRequest.Time.Display);
+                    sendAppointmentConfirmationSmsUseCase.Execute(repair.ContactDetails.Value, repair.Id,
+                        repair.Time.Display);
                     break;
                 default:
-                    throw new Exception($"Invalid contact type: {repairRequest?.ContactDetails?.Type}");
+                    throw new Exception($"Invalid contact type: {repair?.ContactDetails?.Type}");
             }
         }
     }

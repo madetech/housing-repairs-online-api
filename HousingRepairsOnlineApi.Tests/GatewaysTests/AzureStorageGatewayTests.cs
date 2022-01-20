@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using Azure.Storage.Blobs;
+using Azure.Storage.Sas;
 using HousingRepairsOnlineApi.Gateways;
 using Moq;
 using Xunit;
@@ -14,7 +15,10 @@ namespace HousingRepairsOnlineApi.Tests.GatewaysTests
 
         public AzureStorageGatewayTests()
         {
-            mockStorageContainerClient = new Mock<BlobContainerClient>();
+            mockStorageContainerClient = new Mock<BlobContainerClient>()
+            {
+                Name = "BlobContainerClientName"
+            };
 
             azureStorageGateway = new AzureStorageGateway(mockStorageContainerClient.Object);
         }
@@ -40,6 +44,56 @@ namespace HousingRepairsOnlineApi.Tests.GatewaysTests
             // Assert
             mockStorageContainerClient.Verify(foo => foo.GetBlobClient(It.IsRegex(@$"^[0-9A-Fa-f\-]*\.{fileExtension}")), Times.Once());
             mockBlobClient.Verify(x => x.Upload(It.IsAny<MemoryStream>()));
+        }
+
+        [Fact]
+        public async void GivenABlob_WhenGetBlobSasUri_ThenASasUriIsGenerated()
+        {
+            // Arrange
+            const string blobName = "something.png";
+
+            var mockBlobClient = new Mock<BlobClient>();
+
+            mockBlobClient.Setup(x => x.CanGenerateSasUri).Returns(true);
+            mockBlobClient.Setup(x => x.GenerateSasUri(It.IsAny<BlobSasBuilder>())).Returns(new Uri("http://some.thing"));
+            mockBlobClient.Setup(x => x.Uri).Returns(new Uri("http://some.thing"));
+            mockBlobClient.Setup(x => x.Name).Returns("name");
+
+
+            mockBlobClient.Setup(x => x.Name).Returns("BlobContainerClientName");
+
+
+            mockStorageContainerClient.Setup(x => x.GetBlobClient(It.IsAny<string>()))
+                .Returns(mockBlobClient.Object);
+
+
+            var actual = azureStorageGateway.GetUriForBlob(blobName, 100, "antything");
+
+            // Assert
+            mockStorageContainerClient.Verify(foo => foo.GetBlobClient(It.IsRegex(blobName)), Times.Once());
+            mockBlobClient.Verify(x => x.GenerateSasUri(It.IsAny<BlobSasBuilder>()), Times.Once);
+        }
+        [Fact]
+        public async void GivenInvalidPermissions_WhenGetBlobSasUri_ThenExceptionIsThrown()
+        {
+            // Arrange
+            const string blobName = "something.png";
+
+            var mockBlobClient = new Mock<BlobClient>();
+
+            mockBlobClient.Setup(x => x.CanGenerateSasUri).Returns(false);
+
+
+            mockStorageContainerClient.Setup(x => x.GetBlobClient(It.IsAny<string>()))
+                .Returns(mockBlobClient.Object);
+
+            await Assert.ThrowsAsync<Exception>(async () =>
+            {
+                azureStorageGateway.GetUriForBlob(blobName, 100, "anything");
+            });
+
+            // Assert
+            mockBlobClient.Verify(x => x.GenerateSasUri(It.IsAny<BlobSasBuilder>()), Times.Never);
         }
     }
 }

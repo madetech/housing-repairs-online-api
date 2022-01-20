@@ -13,13 +13,16 @@ namespace HousingRepairsOnlineApi.Controllers
     {
         private readonly ISaveRepairRequestUseCase saveRepairRequestUseCase;
         private readonly IAppointmentConfirmationSender appointmentConfirmationSender;
+        private readonly IInternalEmailSender internalEmailSender;
 
         public RepairController(
             ISaveRepairRequestUseCase saveRepairRequestUseCase,
+            IInternalEmailSender internalEmailSender,
             IAppointmentConfirmationSender appointmentConfirmationSender
-            )
+        )
         {
             this.saveRepairRequestUseCase = saveRepairRequestUseCase;
+            this.internalEmailSender = internalEmailSender;
             this.appointmentConfirmationSender = appointmentConfirmationSender;
         }
 
@@ -29,9 +32,9 @@ namespace HousingRepairsOnlineApi.Controllers
             try
             {
                 var result = await saveRepairRequestUseCase.Execute(repairRequest);
-                appointmentConfirmationSender.Execute(repairRequest, result);
-
-                return Ok(result);
+                appointmentConfirmationSender.Execute(result);
+                internalEmailSender.Execute(result);
+                return Ok(result.Id);
             }
             catch (Exception ex)
             {

@@ -66,7 +66,7 @@ namespace HousingRepairsOnlineApi.Tests.UseCasesTests
                 .ReturnsAsync(ImgUrl);
 
             mockCosmosGateway.Setup(x => x.AddRepair(It.IsAny<Repair>()))
-                .ReturnsAsync((Repair r) => r.Id);
+                .ReturnsAsync((Repair r) => r);
 
             var _ = await systemUnderTest.Execute(repairRequest);
 
@@ -108,7 +108,7 @@ namespace HousingRepairsOnlineApi.Tests.UseCasesTests
                 .Returns(RepairCode);
 
             mockCosmosGateway.Setup(x => x.AddRepair(It.IsAny<Repair>()))
-                .ReturnsAsync((Repair r) => r.Id);
+                .ReturnsAsync((Repair r) => r);
 
             var _ = await systemUnderTest.Execute(repairRequest);
 

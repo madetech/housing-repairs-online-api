@@ -3,8 +3,8 @@ using HousingRepairsOnlineApi.Domain;
 
 namespace HousingRepairsOnlineApi.Helpers
 {
-    public interface IAppointmentConfirmationSender
+    public interface IInternalEmailSender
     {
-        public void Execute(Repair repair);
+        public Task Execute(Repair repair);
     }
 }

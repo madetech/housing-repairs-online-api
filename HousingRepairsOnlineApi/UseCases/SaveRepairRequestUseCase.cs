@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using HousingRepairsOnlineApi.Domain;
 using HousingRepairsOnlineApi.Gateways;
 using HousingRepairsOnlineApi.Helpers;
@@ -19,7 +20,7 @@ namespace HousingRepairsOnlineApi.UseCases
             this.sorEngine = sorEngine;
         }
 
-        public async Task<string> Execute(RepairRequest repairRequest)
+        public async Task<Repair> Execute(RepairRequest repairRequest)
         {
             var repair = new Repair
             {
