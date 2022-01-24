@@ -83,6 +83,10 @@
       "plasteringCeiling":"N413305",
       "plasteringWalls":"N431023",
       "woodenFloorboards": "N301125"
+    },
+    "electricsLightsSwitches": {
+      "lights":"N858111",
+      "sockets": "N861511"
     }
   },
   "livingAreas": {
@@ -94,6 +98,10 @@
       "plasteringCeiling":"N413305",
       "plasteringWalls":"N431023",
       "woodenFloorboards": "N301125"
+    },
+    "electricsLightsSwitches": {
+      "lights":"N858111",
+      "sockets": "N861511"
     }
   }
 }
