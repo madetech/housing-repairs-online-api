@@ -26,7 +26,7 @@ namespace HousingRepairsOnlineApi.Tests.HelpersTests
                 }
               }
             }";
-            var mapping = JsonConvert.DeserializeObject<dynamic>(json);
+            var mapping = JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(json);
 
             systemUnderTest = new SoREngine(mapping);
         }

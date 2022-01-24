@@ -27,10 +27,10 @@ namespace HousingRepairsOnlineApi.Helpers
                 throw new InvalidOperationException($"Required configuration file '{SorConfigPath}' not found.", e);
             }
 
-            dynamic soRMapping;
+            IDictionary<string, dynamic> soRMapping;
             try
             {
-                soRMapping = JsonConvert.DeserializeObject<dynamic>(json);
+                soRMapping = JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(json);
             }
             catch (JsonException e)
             {
