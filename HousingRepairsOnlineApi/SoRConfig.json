@@ -13,7 +13,8 @@
     "electrical":{
       "extractorFan":"N841007",
       "sockets":"N861511",
-      "lightFitting":"N858111"
+      "lightFitting":"N858111",
+      "cookerSwitch": "N835005"
     },
     "sink":{
       "taps":"N630147",
