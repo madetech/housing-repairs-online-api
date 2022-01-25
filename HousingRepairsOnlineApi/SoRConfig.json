@@ -73,7 +73,8 @@
       "plasteringCeiling":"N413305",
       "plasteringWalls":"N431023",
       "woodenFloorboards": "N301125"
-    }
+    },
+    "dampMould": "N114001"
   },
   "bedroom": {
     "wallsFloorsCeiling":{
