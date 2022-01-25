@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.IO;
 using HousingRepairsOnlineApi.Helpers;
-using Newtonsoft.Json;
 using Xunit;
 
 namespace HousingRepairsOnlineApi.Tests.HelpersTests
@@ -12,21 +10,36 @@ namespace HousingRepairsOnlineApi.Tests.HelpersTests
 
         public SoREngineTests()
         {
-            var json = @"{
-              ""kitchen"": {
-                ""cupboards"":{
-                  ""doorHangingOff"":""N373049"",
-                  ""doorMissing"":""N373049""
+            var mapping = new Dictionary<string, IDictionary<string, dynamic>>()
+
+            {
+                {
+                    "kitchen", new Dictionary<string, dynamic>
+                    {
+                        {
+                            "cupboards", new Dictionary<string, string>
+                            {
+                                { "doorHangingOff", "N373049" },
+                                { "doorMissing", "N373049" },
+                            }
+                        },
+                        {
+                            "worktop", "N372005"
+                        },
+                    }
                 },
-                ""worktop"": ""N372005""
-              },
-              ""bathroom"": {
-                ""bath"": {
-                  ""bathTaps"": ""N631301""
+                {
+                    "bathroom", new Dictionary<string, dynamic>
+                    {
+                        {
+                            "bath", new Dictionary<string, string>
+                            {
+                                { "bathTaps", "N631301" }
+                            }
+                        }
+                    }
                 }
-              }
-            }";
-            var mapping = JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(json);
+            };
 
             systemUnderTest = new SoREngine(mapping);
         }

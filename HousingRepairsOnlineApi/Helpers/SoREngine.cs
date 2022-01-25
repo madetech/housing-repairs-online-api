@@ -4,9 +4,9 @@ namespace HousingRepairsOnlineApi.Helpers
 {
     public class SoREngine : ISoREngine
     {
-        private readonly IDictionary<string, dynamic> soRMapping;
+        private readonly IDictionary<string, IDictionary<string, dynamic>> soRMapping;
 
-        public SoREngine(IDictionary<string, dynamic> soRMapping)
+        public SoREngine(IDictionary<string, IDictionary<string, dynamic>> soRMapping)
         {
             this.soRMapping = soRMapping;
         }
