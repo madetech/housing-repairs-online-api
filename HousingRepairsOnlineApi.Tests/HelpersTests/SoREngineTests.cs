@@ -10,11 +10,11 @@ namespace HousingRepairsOnlineApi.Tests.HelpersTests
 
         public SoREngineTests()
         {
-            IDictionary<string, IDictionary<string, IDictionary<string, string>>> mapping = new Dictionary<string, IDictionary<string, IDictionary<string, string>>>()
+            var mapping = new Dictionary<string, IDictionary<string, dynamic>>()
+
             {
                 {
-                    "kitchen",
-                    new Dictionary<string, IDictionary<string, string>>
+                    "kitchen", new Dictionary<string, dynamic>
                     {
                         {
                             "cupboards", new Dictionary<string, string>
@@ -24,34 +24,30 @@ namespace HousingRepairsOnlineApi.Tests.HelpersTests
                             }
                         },
                         {
-                            "worktop", new Dictionary<string, string>
-                            {
-                                { "damaged", "N372005" },
-                            }
+                            "worktop", "N372005"
                         },
                     }
                 },
                 {
-                    "bathroom",
-                    new Dictionary<string, IDictionary<string, string>>
+                    "bathroom", new Dictionary<string, dynamic>
                     {
                         {
                             "bath", new Dictionary<string, string>
                             {
-                                {"bathTaps", "N631301"},
-
+                                { "bathTaps", "N631301" }
                             }
-                        },
+                        }
                     }
                 }
             };
+
             systemUnderTest = new SoREngine(mapping);
         }
 
         [Theory]
         [InlineData("kitchen", "cupboards", "doorHangingOff", "N373049")]
         [InlineData("kitchen", "cupboards", "doorMissing", "N373049")]
-        [InlineData("kitchen", "worktop", "damaged", "N372005")]
+        [InlineData("kitchen", "worktop", null, "N372005")]
         [InlineData("bathroom", "bath", "bathTaps", "N631301")]
         public void GivenLocationProblemIssue_WhenCallingMapSorCode_ThenExpectedSorIsReturned(string location, string problem, string issue, string expectedSor)
         {

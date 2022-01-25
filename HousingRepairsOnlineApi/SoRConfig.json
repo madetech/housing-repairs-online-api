@@ -4,9 +4,7 @@
       "doorHangingOff":"N373049",
       "doorMissing":"N373049"
     },
-    "worktop":{
-      "damaged":"N372005"
-    },
+    "worktop": "N372005",
     "dampMould":{
       "dampMould":"N114001"
     },

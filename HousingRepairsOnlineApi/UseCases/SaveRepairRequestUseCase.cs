@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using HousingRepairsOnlineApi.Domain;
 using HousingRepairsOnlineApi.Gateways;
 using HousingRepairsOnlineApi.Helpers;
+using Microsoft.Extensions.Logging;
 
 namespace HousingRepairsOnlineApi.UseCases
 {
@@ -22,6 +23,7 @@ namespace HousingRepairsOnlineApi.UseCases
 
         public async Task<Repair> Execute(RepairRequest repairRequest)
         {
+
             var repair = new Repair
             {
                 Address = repairRequest.Address,
@@ -39,7 +41,7 @@ namespace HousingRepairsOnlineApi.UseCases
                 SOR = sorEngine.MapSorCode(
                     repairRequest.Location.Value,
                     repairRequest.Problem.Value,
-                    repairRequest.Issue.Value)
+                    repairRequest.Issue?.Value)
             };
 
             if (!string.IsNullOrEmpty(repairRequest.Description.Base64Img))
