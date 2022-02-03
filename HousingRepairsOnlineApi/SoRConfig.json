@@ -152,6 +152,12 @@
     "damagedOrStuckDoors": {
       "internalDoorIssue": "N330007",
       "lockOnDoor": ""
+    },
+    "stairs": {
+      "damagedSteps": "N351003",
+      "damagedPalistrades": "N351009",
+      "handRail": "N352009",
+      "stairRailLoose": "N351019"
     }
   },
   "outside": {
