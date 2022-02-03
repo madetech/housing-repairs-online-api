@@ -169,10 +169,11 @@
       "looseTiles": "N201113",
       "flatRoofProblems": "N217032"
     },
-    "garage":{
+    "garage": {
       "doorDamage": "N345203",
       "lockDamage": "N345609",
       "brokenInto": "N345611",
       "roofIssueOrLeak": "N217032"
+    }
   }
 }
