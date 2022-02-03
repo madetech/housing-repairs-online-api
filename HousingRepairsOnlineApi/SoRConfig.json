@@ -156,6 +156,13 @@
   },
   "outside": {
     "securityLights": "N880112",
+    "door": {
+      "shedDoor": "N328101",
+      "outhouseCupboardDoor": "N330001",
+      "woodenBackDoor": "N321305",
+      "upvcBackDoor": "N325117",
+      "frenchDoors": "N325117"
+    },
     "roof": {
       "shedOuthouseRoof": "N223011",
       "loftInsulation": "N227005",
