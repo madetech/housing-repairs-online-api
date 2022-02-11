@@ -132,6 +132,7 @@ namespace HousingRepairsOnlineApi
                 c.AddJwtSecurityScheme();
             });
 
+            services.AddHealthChecks();
         }
 
         private static BlobContainerClient GetBlobContainerClient()
@@ -186,6 +187,7 @@ namespace HousingRepairsOnlineApi
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers().RequireAuthorization();
+                endpoints.MapHealthChecks("/health");
             });
         }
 
