@@ -8,12 +8,12 @@ namespace HousingRepairsOnlineApi.Gateways
 {
     public class CosmosGateway : IRepairStorageGateway
     {
-        private Container cosmosContainer;
+        // private Container cosmosContainer;
         private readonly IIdGenerator idGenerator;
 
-        public CosmosGateway(Container cosmosContainer, IIdGenerator idGenerator)
+        public CosmosGateway(IIdGenerator idGenerator)
         {
-            this.cosmosContainer = cosmosContainer;
+            // this.cosmosContainer = cosmosContainer;
             this.idGenerator = idGenerator;
         }
 
@@ -22,19 +22,20 @@ namespace HousingRepairsOnlineApi.Gateways
         /// </summary>
         public async Task<Repair> AddRepair(Repair repair)
         {
-            repair.Id = idGenerator.Generate();
-
-            try
-            {
-                ItemResponse<Repair> itemResponse = await cosmosContainer.CreateItemAsync(repair);
-
-                return itemResponse.Resource;
-            }
-            catch (CosmosException ex)
-            {
-                var newRepair = await AddRepair(repair);
-                return newRepair;
-            }
+            // repair.Id = idGenerator.Generate();
+            //
+            // try
+            // {
+            //     ItemResponse<Repair> itemResponse = await cosmosContainer.CreateItemAsync(repair);
+            //
+            //     return itemResponse.Resource;
+            // }
+            // catch (CosmosException ex)
+            // {
+            //     var newRepair = await AddRepair(repair);
+            //     return newRepair;
+            // }
+            return repair;
         }
     }
 }
