@@ -105,7 +105,7 @@ namespace HousingRepairsOnlineApi
             services.AddTransient<ISaveRepairRequestUseCase, SaveRepairRequestUseCase>();
             services.AddTransient<IInternalEmailSender, InternalEmailSender>();
 
-            var cosmosContainer = GetCosmosContainer();
+            // var cosmosContainer = GetCosmosContainer();
 
             services.AddTransient<IIdGenerator, IdGenerator>();
 
@@ -113,16 +113,16 @@ namespace HousingRepairsOnlineApi
             {
                 var idGenerator = s.GetService<IIdGenerator>();
                 return new CosmosGateway(
-                    cosmosContainer, idGenerator
+                    idGenerator
                 );
             });
 
-            var blobContainerClient = GetBlobContainerClient();
+             //var blobContainerClient = GetBlobContainerClient();
 
             services.AddTransient<IBlobStorageGateway, AzureStorageGateway>(s =>
             {
                 return new AzureStorageGateway(
-                    blobContainerClient
+                    // blobContainerClient
                 );
             });
 
@@ -139,11 +139,11 @@ namespace HousingRepairsOnlineApi
             var storageConnectionString = Environment.GetEnvironmentVariable("AZURE_STORAGE_CONNECTION_STRING");
             var blobContainerName = Environment.GetEnvironmentVariable("STORAGE_CONTAINER_NAME");
 
-            services.AddHealthChecks()
-                .AddUrlGroup(new Uri(@$"{addressesApiUrl}/health"), "Addresses API")
-                .AddUrlGroup(new Uri(@$"{schedulingApiUrl}/health"), "Scheduling API")
-                .AddCosmosDb($"AccountEndpoint={cosmosEndpointUrl};AccountKey={cosmosAuthorizationKey};", cosmosDatabaseId, name: "Azure CosmosDb")
-                .AddAzureBlobStorage(storageConnectionString, blobContainerName, name: "Azure Blob Storage");
+            services.AddHealthChecks();
+            //     .AddUrlGroup(new Uri(@$"{addressesApiUrl}/health"), "Addresses API")
+            //     .AddUrlGroup(new Uri(@$"{schedulingApiUrl}/health"), "Scheduling API")
+            //     .AddCosmosDb($"AccountEndpoint={cosmosEndpointUrl};AccountKey={cosmosAuthorizationKey};", cosmosDatabaseId, name: "Azure CosmosDb")
+            //     .AddAzureBlobStorage(storageConnectionString, blobContainerName, name: "Azure Blob Storage");
         }
 
         private static BlobContainerClient GetBlobContainerClient()
@@ -190,7 +190,7 @@ namespace HousingRepairsOnlineApi
 
             app.UseRouting();
 
-            app.UseSentryTracing();
+            //app.UseSentryTracing();
 
             app.UseAuthentication();
             app.UseAuthorization();
