@@ -16,9 +16,7 @@ http:
 
 # Configuration for your containers and service.
 image:
-  # Docker build arguments. For additional overrides: https://aws.github.io/copilot-cli/docs/manifest/lb-web-service/#image-build
-  build: HelloWorld
-  # Port exposed through your container to route traffic to it.
+  location: nginx
   port: 80
 
 cpu: 256       # Number of CPU units for the task.
