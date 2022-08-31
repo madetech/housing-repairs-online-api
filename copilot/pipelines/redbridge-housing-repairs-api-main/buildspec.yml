@@ -7,7 +7,7 @@ env:
 phases:
   install:
     runtime-versions:
-      docker: 19
+      docker: 20
       ruby: 2.6
       dotnet: 6.0
     commands:
