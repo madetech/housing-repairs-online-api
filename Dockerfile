@@ -5,8 +5,8 @@ EXPOSE 80
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
 COPY ["HousingRepairsOnlineApi/HousingRepairsOnlineApi.csproj", "HousingRepairsOnlineApi/"]
-ARG PASSWORD
 ARG USERNAME
+ARG PASSWORD
 RUN dotnet nuget add source --username $USERNAME --password $PASSWORD --store-password-in-clear-text --name github "https://nuget.pkg.github.com/City-of-Lincoln-Council/index.json"
 RUN dotnet restore "HousingRepairsOnlineApi/HousingRepairsOnlineApi.csproj"
 COPY . .
