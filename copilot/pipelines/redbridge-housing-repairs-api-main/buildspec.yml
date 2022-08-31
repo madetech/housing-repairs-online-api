@@ -24,7 +24,7 @@ phases:
       - echo "Linting"
       #- dotnet format --verify-no-changes
       - echo "Running tests"
-      - dotnet test --logger:"console;verbosity=detailed"
+      #- dotnet test --logger:"console;verbosity=detailed"
   post_build:
     commands:
       - ls -l
