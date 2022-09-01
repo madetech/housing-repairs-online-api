@@ -7,6 +7,8 @@ WORKDIR /src
 COPY ["HousingRepairsOnlineApi/HousingRepairsOnlineApi.csproj", "HousingRepairsOnlineApi/"]
 ARG USERNAME
 ARG TOKEN
+RUN echo $USERNAME
+RUN echo $TOKEN
 RUN dotnet nuget add source --username $USERNAME --password $TOKEN --store-password-in-clear-text --name github "https://nuget.pkg.github.com/City-of-Lincoln-Council/index.json"
 RUN dotnet restore "HousingRepairsOnlineApi/HousingRepairsOnlineApi.csproj"
 COPY . .
