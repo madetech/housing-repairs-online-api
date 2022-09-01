@@ -23,8 +23,24 @@ exec: true # Enable running commands in your container.
 #  LOG_LEVEL: info
 
 # You can override any of the values defined above by environment.
-#environments:
-#  test:
-#    count: 2               # Number of tasks to run for the "test" environment.
-#    deployment:            # The deployment strategy for the "test" environment.
-#       rolling: 'recreate' # Stops existing tasks before new ones are started for faster deployments.
+# NOTE!!!: Environment variables set here are for test purposes, secrets should be set using SSM or similar
+environments:
+  preproduction:
+    variables:
+      AUTHENTICATION_IDENTIFIER: FOO
+      JWT_SECRET: FOO
+      ADDRESSES_API_URL: http://foo
+      SCHEDULING_API_URL: http://foo
+      # Azure specific environment variables need to be removed
+      COSMOS_ENDPOINT_URL: http://foo
+      COSMOS_AUTHORIZATION_KEY: FOO
+      COSMOS_DATABASE_ID: FOO
+      COSMOS_CONTAINER_ID: FOO
+      AZURE_STORAGE_CONNECTION_STRING: FOO
+      STORAGE_CONTAINER_NAME: FOO
+      GOV_NOTIFY_KEY: FOO
+      CONFIRMATION_SMS_NOTIFY_TEMPLATE_ID: FOO
+      CONFIRMATION_EMAIL_NOTIFY_TEMPLATE_ID: FOO
+      INTERNAL_EMAIL_NOTIFY_TEMPLATE_ID: FOO
+      INTERNAL_EMAIL: FOO
+      DAYS_UNTIL_IMAGE_EXPIRY: FOO
