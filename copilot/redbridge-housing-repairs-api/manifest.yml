@@ -44,3 +44,8 @@ environments:
       INTERNAL_EMAIL_NOTIFY_TEMPLATE_ID: FOO
       INTERNAL_EMAIL: FOO
       DAYS_UNTIL_IMAGE_EXPIRY: FOO
+    network:
+      vpc:
+        security_groups:
+          deny_default: false
+          groups: [sg-02c845b61c1cb0381]
