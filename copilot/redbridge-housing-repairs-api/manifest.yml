@@ -29,8 +29,8 @@ environments:
     variables:
       AUTHENTICATION_IDENTIFIER: FOO
       JWT_SECRET: FOO
-      ADDRESSES_API_URL: http://foo
-      SCHEDULING_API_URL: http://foo
+      ADDRESSES_API_URL: http://redbridge-housing-repairs-hms-api.preproduction.saas-platform.local
+      SCHEDULING_API_URL: http://redbridge-housing-repairs-scheduling-api.preproduction.saas-platform.local
       # Azure specific environment variables need to be removed
       COSMOS_ENDPOINT_URL: http://foo
       COSMOS_AUTHORIZATION_KEY: FOO
