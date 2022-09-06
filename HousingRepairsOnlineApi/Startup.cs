@@ -3,12 +3,14 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs;
 using HousingRepairsOnline.Authentication.DependencyInjection;
+using HousingRepairsOnlineApi.Domain;
 using HousingRepairsOnlineApi.Gateways;
 using HousingRepairsOnlineApi.Helpers;
 using HousingRepairsOnlineApi.UseCases;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Azure.Cosmos;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
@@ -42,6 +44,19 @@ namespace HousingRepairsOnlineApi
             var schedulingApiUrl = GetEnvironmentVariable("SCHEDULING_API_URL");
             var authenticationIdentifier = GetEnvironmentVariable("AUTHENTICATION_IDENTIFIER");
             services.AddHttpClient();
+
+            services.AddDbContext<RepairContext>(options =>
+            {
+                //"Host=myserver;Username=mylogin;Password=mypass;Database=mydatabase"
+
+                var dbHost = GetEnvironmentVariable("DB_HOST");
+                var dbUsername = GetEnvironmentVariable("DB_USERNAME");
+                var dbPassword = GetEnvironmentVariable("DB_PASSWORD");
+                var dbName = GetEnvironmentVariable("DB_NAME");
+
+                var dbConnectionString = $"Host={dbHost};Username={dbUsername};Password={dbPassword};Database={dbName}";
+                    options.UseNpgsql(dbConnectionString);
+            });
 
             services.AddTransient<IAddressGateway, AddressGateway>(s =>
             {
