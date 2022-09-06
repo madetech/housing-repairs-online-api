@@ -1,0 +1,43 @@
+version: "3.9"
+
+services:
+  repairs-api:
+    build:
+      context: .
+      args:
+        USERNAME: ${USERNAME}
+        TOKEN: ${PASSWORD}
+    ports:
+      - "8080:80"
+    env_file:
+      - .env
+    environment:
+      SCHEDULING_API_URL: http://scheduling
+      ADDRESSES_API_URL: http://housing
+
+  scheduling:
+    build:
+      context: ../HousingRepairsSchedulingApi
+      args:
+        USERNAME: ${USERNAME}
+        TOKEN: ${PASSWORD}
+    env_file:
+      - ../HousingRepairsSchedulingApi/.env
+
+  housing:
+    build:
+      context: ../HousingManagementSystemApi
+      args:
+        USERNAME: ${USERNAME}
+        TOKEN: ${PASSWORD}
+    env_file:
+      - ../HousingManagementSystemApi/.env
+
+  frontend:
+    build:
+      context: ../housing-repairs-online-frontend
+    environment:
+      REPAIRS_API_BASE_URL: http://repairs-api
+      REPAIRS_API_IDENTIFIER: FOO
+    ports:
+      - "3000:3000"
