@@ -127,13 +127,7 @@ namespace HousingRepairsOnlineApi
 
             services.AddTransient<IIdGenerator, IdGenerator>();
 
-            services.AddTransient<IRepairStorageGateway, PostgresGateway>(s =>
-            {
-                var idGenerator = s.GetService<IIdGenerator>();
-                return new CosmosGateway(
-                    idGenerator
-                );
-            });
+            services.AddTransient<IRepairStorageGateway, PostgresGateway>();
 
             //var blobContainerClient = GetBlobContainerClient();
 

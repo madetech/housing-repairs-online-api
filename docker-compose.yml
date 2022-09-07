@@ -14,10 +14,11 @@ services:
     environment:
       SCHEDULING_API_URL: http://scheduling
       ADDRESSES_API_URL: http://housing
-      DB_USER: housing_repairs
+      DB_USERNAME: housing_repairs
       DB_PASSWORD: password
       DB_NAME: repairs
       DB_HOST: postgres
+      AUTHENTICATION_IDENTIFIER: FOO
 
   postgres:
     image: library/postgres:12
@@ -36,6 +37,8 @@ services:
         TOKEN: ${PASSWORD}
     env_file:
       - ../HousingRepairsSchedulingApi/.env
+    environment:
+      AUTHENTICATION_IDENTIFIER: FOO
 
   housing:
     build:
@@ -45,6 +48,8 @@ services:
         TOKEN: ${PASSWORD}
     env_file:
       - ../HousingManagementSystemApi/.env
+    environment:
+      AUTHENTICATION_IDENTIFIER: FOO
 
   frontend:
     build:
