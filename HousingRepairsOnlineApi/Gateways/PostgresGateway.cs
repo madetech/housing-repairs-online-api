@@ -19,7 +19,7 @@ public class PostgresGateway : IRepairStorageGateway
     {
         repair.Id = idGenerator.Generate();
         context.Repairs.Add(repair);
-        repair = await context.sa;
+        var result = await context.SaveChangesAsync();
 
         return repair;
     }
