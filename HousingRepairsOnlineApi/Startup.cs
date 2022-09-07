@@ -55,8 +55,10 @@ namespace HousingRepairsOnlineApi
                 var dbName = GetEnvironmentVariable("DB_NAME");
 
                 var dbConnectionString = $"Host={dbHost};Username={dbUsername};Password={dbPassword};Database={dbName}";
-                    options.UseNpgsql(dbConnectionString);
+                options.UseNpgsql(dbConnectionString);
             });
+
+            services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddTransient<IAddressGateway, AddressGateway>(s =>
             {
@@ -96,11 +98,12 @@ namespace HousingRepairsOnlineApi
                 return new SendAppointmentConfirmationSmsUseCase(notifyGateway, smsConfirmationTemplateId);
             });
 
-            services.AddTransient<ISendAppointmentConfirmationEmailUseCase, SendAppointmentConfirmationEmailUseCase>(s =>
-            {
-                var notifyGateway = s.GetService<INotifyGateway>();
-                return new SendAppointmentConfirmationEmailUseCase(notifyGateway, emailConfirmationTemplateId);
-            });
+            services.AddTransient<ISendAppointmentConfirmationEmailUseCase, SendAppointmentConfirmationEmailUseCase>(
+                s =>
+                {
+                    var notifyGateway = s.GetService<INotifyGateway>();
+                    return new SendAppointmentConfirmationEmailUseCase(notifyGateway, emailConfirmationTemplateId);
+                });
 
             services.AddTransient<IAppointmentConfirmationSender, AppointmentConfirmationSender>();
 
@@ -132,7 +135,7 @@ namespace HousingRepairsOnlineApi
                 );
             });
 
-             //var blobContainerClient = GetBlobContainerClient();
+            //var blobContainerClient = GetBlobContainerClient();
 
             services.AddTransient<IBlobStorageGateway, AzureStorageGateway>(s =>
             {
@@ -220,7 +223,8 @@ namespace HousingRepairsOnlineApi
         private static string GetEnvironmentVariable(string name)
         {
             return Environment.GetEnvironmentVariable(name) ??
-                   throw new InvalidOperationException($"Incorrect configuration: '{name}' environment variable must be set");
+                   throw new InvalidOperationException(
+                       $"Incorrect configuration: '{name}' environment variable must be set");
         }
     }
 }
