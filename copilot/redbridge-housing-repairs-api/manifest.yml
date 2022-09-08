@@ -25,12 +25,12 @@ exec: true # Enable running commands in your container.
 # You can override any of the values defined above by environment.
 # NOTE!!!: Environment variables set here are for test purposes, secrets should be set using SSM or similar
 environments:
-  preproduction:
+  development:
     variables:
       AUTHENTICATION_IDENTIFIER: FOO
       JWT_SECRET: FOO
-      ADDRESSES_API_URL: http://redbridge-housing-repairs-hms-api.preproduction.saas-platform.local
-      SCHEDULING_API_URL: http://redbridge-housing-repairs-scheduling-api.preproduction.saas-platform.local
+      ADDRESSES_API_URL: http://redbridge-housing-repairs-hms-api.development.saas.local
+      SCHEDULING_API_URL: http://redbridge-housing-repairs-scheduling-api.development.saas.local
       # Azure specific environment variables need to be removed
       COSMOS_ENDPOINT_URL: http://foo
       COSMOS_AUTHORIZATION_KEY: FOO
