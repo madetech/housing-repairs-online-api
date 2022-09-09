@@ -47,15 +47,9 @@ namespace HousingRepairsOnlineApi
 
             services.AddDbContext<RepairContext>(options =>
             {
-                //"Host=myserver;Username=mylogin;Password=mypass;Database=mydatabase"
+                var dbConnectionString = GetEnvironmentVariable("DB_CONNECTION_STRING");
 
-                var dbHost = GetEnvironmentVariable("DB_HOST");
-                var dbUsername = GetEnvironmentVariable("DB_USERNAME");
-                var dbPassword = GetEnvironmentVariable("DB_PASSWORD");
-                var dbName = GetEnvironmentVariable("DB_NAME");
-
-                var dbConnectionString = $"Host={dbHost};Username={dbUsername};Password={dbPassword};Database={dbName}";
-                options.UseNpgsql(dbConnectionString);
+                options.UseNpgsql(dbConnectionString).UseSnakeCaseNamingConvention();
             });
 
             services.AddDatabaseDeveloperPageExceptionFilter();
