@@ -11,6 +11,6 @@ public class RepairContext : DbContext
     // TODO: Do we really want to create the tables like this???
     protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Repair>().ToTable(nameof(Repair));
+            modelBuilder.Entity<Repair>().ToTable("repair");
         }
 }
