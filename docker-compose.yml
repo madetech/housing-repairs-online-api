@@ -14,7 +14,10 @@ services:
     environment:
       SCHEDULING_API_URL: http://scheduling
       ADDRESSES_API_URL: http://housing
-      DB_CONNECTION_STRING: "Host=postgres;Username=housing_repairs;Password=password;Database=repairs"
+      DB_USERNAME: housing_repairs
+      DB_PASSWORD: password
+      DB_HOST: postgres
+      DB_NAME: repairs
       AUTHENTICATION_IDENTIFIER: FOO
 
   postgres:
