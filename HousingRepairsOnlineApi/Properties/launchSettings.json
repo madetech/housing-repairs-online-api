@@ -38,7 +38,10 @@
         "INTERNAL_EMAIL": "<REPLACE WITH CSA INTERNAL EMAIL>",
         "DAYS_UNTIL_IMAGE_EXPIRY": "<REPLACE WITH NUMBER OF DAYS BEFORE IMAGE SAS URI EXPIRES>",
         "SENTRY_DNS": "https://<REPLACE WITH SENTRY DSN>",
-        "DB_CONNECTION_STRING": "Host=localhost;Username=housing_repairs;Password=password;Database=repairs"
+        "DB_HOST": "localhost",
+        "DB_USERNAME": "housing_repairs",
+        "DB_PASSWORD": "password",
+        "DB_NAME": "repairs"
       }
     }
   }

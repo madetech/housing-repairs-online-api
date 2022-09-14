@@ -44,7 +44,12 @@ public class Startup
 
         services.AddDbContext<RepairContext>(options =>
         {
-            var dbConnectionString = GetEnvironmentVariable("DB_CONNECTION_STRING");
+            var dbHost = GetEnvironmentVariable("DB_HOST");
+            var dbUsername = GetEnvironmentVariable("DB_USERNAME");
+            var dbPassword = GetEnvironmentVariable("DB_PASSWORD");
+            var dbName = GetEnvironmentVariable("DB_NAME");
+
+            var dbConnectionString = $"Host={dbHost};Username={dbUsername};Password={dbPassword};Database={dbName}";
 
             options.UseNpgsql(dbConnectionString).UseSnakeCaseNamingConvention();
         });
