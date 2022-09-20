@@ -1,7 +1,9 @@
-﻿namespace HousingRepairsOnlineApi.Helpers
+﻿using System;
+
+namespace HousingRepairsOnlineApi.Helpers
 {
     public interface IIdGenerator
     {
-        public string Generate();
+        public Guid Generate();
     }
 }
