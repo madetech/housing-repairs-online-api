@@ -1,4 +1,5 @@
-﻿using HousingRepairsOnlineApi.Domain;
+﻿using System;
+using HousingRepairsOnlineApi.Domain;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -13,7 +14,7 @@ namespace HousingRepairsOnlineApi.Migrations
                 name: "repair",
                 columns: table => new
                 {
-                    id = table.Column<string>(type: "text", nullable: false),
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
                     postcode = table.Column<string>(type: "text", nullable: true),
                     sor = table.Column<string>(type: "text", nullable: true),
                     address = table.Column<RepairAddress>(type: "jsonb", nullable: true),
