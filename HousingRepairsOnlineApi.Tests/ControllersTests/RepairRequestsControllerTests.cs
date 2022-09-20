@@ -55,7 +55,7 @@ namespace HousingRepairsOnlineApi.Tests
 
             var repair = new Repair
             {
-                Id = "1AB2C3D4",
+                Id = new Guid(),
                 ContactDetails = new RepairContactDetails { Value = "07465087654" },
                 Address = new RepairAddress { Display = "address", LocationId = "uprn" },
                 Description = new RepairDescription { Text = "repair description", Base64Image = "image", PhotoUrl = "x/Url.png" },
@@ -109,7 +109,7 @@ namespace HousingRepairsOnlineApi.Tests
             };
             var repair = new Repair()
             {
-                Id = "1AB2C3D4",
+                Id = new Guid(),
                 ContactDetails = new RepairContactDetails
                 {
                     Type = "email",
@@ -145,7 +145,7 @@ namespace HousingRepairsOnlineApi.Tests
             };
             var repair = new Repair
             {
-                Id = "1AB2C3D4",
+                Id = new Guid(),
                 ContactDetails = new RepairContactDetails
                 {
                     Type = "text",

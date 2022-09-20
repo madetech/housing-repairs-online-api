@@ -1,10 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HousingRepairsOnlineApi.Domain
 {
     public class Repair
     {
-        public string Id { get; set; }
+        public Guid Id { get; set; }
         public string Postcode { get; set; }
         public string SOR { get; set; }
 

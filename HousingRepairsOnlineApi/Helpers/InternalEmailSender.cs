@@ -26,7 +26,7 @@ namespace HousingRepairsOnlineApi.Helpers
                     imageLink = retrieveImageLinkUseCase.Execute(repair.Description?.PhotoUrl);
                 });
             }
-            sendInternalEmailUseCase.Execute(repair.Id, repair.Address.LocationId, repair.Address.Display, repair.SOR, repair.Description.Text, repair.ContactDetails?.Value, imageLink);
+            sendInternalEmailUseCase.Execute(repair.Id.ToString(), repair.Address.LocationId, repair.Address.Display, repair.SOR, repair.Description.Text, repair.ContactDetails?.Value, imageLink);
         }
     }
 }

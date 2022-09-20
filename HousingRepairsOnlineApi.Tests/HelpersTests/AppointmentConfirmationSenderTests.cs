@@ -1,4 +1,5 @@
-﻿using HousingRepairsOnlineApi.Domain;
+﻿using System;
+using HousingRepairsOnlineApi.Domain;
 using HousingRepairsOnlineApi.Helpers;
 using HousingRepairsOnlineApi.UseCases;
 using Moq;
@@ -22,7 +23,7 @@ namespace HousingRepairsOnlineApi.Tests.HelpersTests
         [Fact]
         public void GivenEmailContact_WhenExecute_ThenSendAppointmentConfirmationEmailUseCaseIsCalled()
         {
-            var repair = new Repair() { Id = "id", ContactDetails = new RepairContactDetails { Type = AppointmentConfirmationSendingTypes.Email, Value = "abc@defg.hij" }, Time = new RepairAvailability() { Display = "some time" } };
+            var repair = new Repair() { Id = new Guid(), ContactDetails = new RepairContactDetails { Type = AppointmentConfirmationSendingTypes.Email, Value = "abc@defg.hij" }, Time = new RepairAvailability() { Display = "some time" } };
             systemUnderTest.Execute(repair);
             sendAppointmentConfirmationEmailUseCaseMock.Verify(x => x.Execute(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
             sendAppointmentConfirmationSmsUseCaseMock.Verify(x => x.Execute(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Never);
@@ -31,7 +32,7 @@ namespace HousingRepairsOnlineApi.Tests.HelpersTests
         [Fact]
         public void GivenSmsContact_WhenExecute_ThenSendAppointmentConfirmationSmsUseCaseIsCalled()
         {
-            var repair = new Repair() { Id = "id", ContactDetails = new RepairContactDetails { Type = AppointmentConfirmationSendingTypes.Sms, Value = "0754325678" }, Time = new RepairAvailability() { Display = "some time" } };
+            var repair = new Repair() { Id = new Guid(), ContactDetails = new RepairContactDetails { Type = AppointmentConfirmationSendingTypes.Sms, Value = "0754325678" }, Time = new RepairAvailability() { Display = "some time" } };
             systemUnderTest.Execute(repair);
             sendAppointmentConfirmationEmailUseCaseMock.Verify(x => x.Execute(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Never);
             sendAppointmentConfirmationSmsUseCaseMock.Verify(x => x.Execute(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
