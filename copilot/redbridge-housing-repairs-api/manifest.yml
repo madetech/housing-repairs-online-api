@@ -24,6 +24,7 @@ exec: true # Enable running commands in your container.
 secrets:
   DB_USERNAME: "/redbridge/database/username"
   DB_PASSWORD: "/redbridge/database/password"
+  GOV_NOTIFY_KEY: "/redbridge/govnotify/apikey"
 
   # You can refer to a specific key in the JSON blob.
 
@@ -42,7 +43,6 @@ environments:
       # Azure specific environment variables need to be removed
       AZURE_STORAGE_CONNECTION_STRING: FOO
       STORAGE_CONTAINER_NAME: FOO
-      GOV_NOTIFY_KEY: FOO
       CONFIRMATION_SMS_NOTIFY_TEMPLATE_ID: 3a1ae813-fff6-41e0-a07a-9feb50b94737
       CONFIRMATION_EMAIL_NOTIFY_TEMPLATE_ID: 3a1ae813-fff6-41e0-a07a-9feb50b94737
       INTERNAL_EMAIL_NOTIFY_TEMPLATE_ID: 3a1ae813-fff6-41e0-a07a-9feb50b94737
