@@ -52,4 +52,4 @@ environments:
       vpc:
         security_groups:
           deny_default: false
-          groups: [sg-02c845b61c1cb0381, sg-0ef09787898c34d34]
+          groups: [sg-02c845b61c1cb0381, sg-02d1efa0cb74b1a77]
