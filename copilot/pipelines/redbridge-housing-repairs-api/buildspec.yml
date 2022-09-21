@@ -22,9 +22,8 @@ phases:
       - echo "Setup"
       - dotnet nuget add source --username $GITHUB_USERNAME --password $GITHUB_TOKEN --store-password-in-clear-text --name github "https://nuget.pkg.github.com/City-of-Lincoln-Council/index.json"
       - echo "Linting"
-      #- dotnet format --verify-no-changes
       - echo "Running tests"
-      #- dotnet test --logger:"console;verbosity=detailed"
+      - dotnet test --logger:"console;verbosity=detailed"
   post_build:
     commands:
       - ls -l
