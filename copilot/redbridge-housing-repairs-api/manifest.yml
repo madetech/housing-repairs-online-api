@@ -22,16 +22,10 @@ exec: true # Enable running commands in your container.
 #variables:                    # Pass environment variables as key value pairs.
 #  LOG_LEVEL: info
 secrets:
-  DB_USERNAME:
-    secretsmanager: '/redbridge/database/username'
-  DB_PASSWORD:
-    secretsmanager: '/redbridge/database/password'
-
-
-
+  DB_USERNAME: "/redbridge/database/username"
+  DB_PASSWORD: "/redbridge/database/password"
 
   # You can refer to a specific key in the JSON blob.
-
 
 # You can override any of the values defined above by environment.
 # NOTE!!!: Environment variables set here are for test purposes, secrets should be set using SSM or similar
@@ -58,4 +52,4 @@ environments:
       vpc:
         security_groups:
           deny_default: false
-          groups: [sg-02c845b61c1cb0381,sg-0ef09787898c34d34]
+          groups: [sg-02c845b61c1cb0381, sg-0ef09787898c34d34]
