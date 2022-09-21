@@ -21,6 +21,17 @@ exec: true # Enable running commands in your container.
 #
 #variables:                    # Pass environment variables as key value pairs.
 #  LOG_LEVEL: info
+secrets:
+  DB_USERNAME:
+    secretsmanager: '/redbridge/database/username'
+  DB_PASSWORD:
+    secretsmanager: '/redbridge/database/password'
+
+
+
+
+  # You can refer to a specific key in the JSON blob.
+
 
 # You can override any of the values defined above by environment.
 # NOTE!!!: Environment variables set here are for test purposes, secrets should be set using SSM or similar
@@ -31,6 +42,9 @@ environments:
       JWT_SECRET: FOO
       ADDRESSES_API_URL: http://redbridge-housing-repairs-hms-api.development.saas.local
       SCHEDULING_API_URL: http://redbridge-housing-repairs-scheduling-api.development.saas.local
+      # Database
+      DB_NAME: RedbridgeDluhcHousingRepairs
+      DB_HOST: postgres.development.infrastructure.local
       # Azure specific environment variables need to be removed
       AZURE_STORAGE_CONNECTION_STRING: FOO
       STORAGE_CONTAINER_NAME: FOO
