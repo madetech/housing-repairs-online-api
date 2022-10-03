@@ -1,197 +1,196 @@
 {
-  "kitchen":{
-    "cupboards":{
-      "doorHangingOff":"N373049",
-      "doorMissing":"N373049"
+  "kitchen": {
+    "cupboards": {
+      "doorHangingOff": "373049",
+      "doorMissing": "373007"
     },
-    "worktop": "N372005",
+    "worktop": "372001",
     "dampOrMould": {
-      "dampOrMould" : "N114001"
-    }
-  ,
-    "electrical":{
-      "extractorFan":"N840031",
-      "sockets":"N861519",
-      "lightFitting":"N861005",
-      "cookerSwitch": "N835005"
+      "dampOrMould": ""
     },
-    "sink":{
-      "taps":"N631321",
-      "pipeworkLeak":"N630147",
-      "leakBlockage": "N620507",
-      "damageSink": "N630714"
+    "electrical": {
+      "extractorFan": "841001",
+      "sockets": "855013",
+      "lightFitting": "856701",
+      "cookerSwitch": "835011"
     },
-    "wallsFloorsCeiling":{
-      "wallTiles":"N431041",
-      "floorTiles":"N432005",
-      "lightFitting":"N858111",
-      "skirtingBoardArchitrave":"N381001",
-      "plasteringCeiling":"N413105",
-      "plasteringWalls":"N411121",
-      "woodenFloorboards": "N301125"
+    "sink": {
+      "taps": "",
+      "pipeworkLeak": "630107",
+      "leakBlockage": "640003",
+      "damageSink": "630107"
     },
-    "door":{
-      "backDoorWooden":"N324123",
-      "backDoorUPVC":"N325117",
-      "backFrenchDoors":"N325117",
-      "internal":"N330007",
-      "sliding":"N330007"
+    "wallsFloorsCeiling": {
+      "wallTiles": "431007",
+      "floorTiles": "431505",
+      "lightFitting": "835011",
+      "skirtingBoardArchitrave": "342105",
+      "plasteringCeiling": "413105",
+      "plasteringWalls": "411121",
+      "woodenFloorboards": "305705"
+    },
+    "door": {
+      "backDoorWooden": "324123",
+      "backDoorUPVC": "325105",
+      "backFrenchDoors": "325106",
+      "internal": "326105",
+      "sliding": "326106"
     },
     "heatingOrHotWater": {
       "boiler": "",
       "radiator": ""
     },
     "windows": {
-      "smashed": "N551055",
-      "stuckOpen": "N315001",
-      "stuckShut": "N318125",
-      "condensation": "N318151"
+      "smashed": "315014",
+      "stuckOpen": "315049",
+      "stuckShut": "315049",
+      "condensation": ""
     }
   },
-  "bathroom":{
-    "bath":{
-      "bathTaps":"N631321",
-      "sealAroundBath":"N630945",
-      "bathPanel":"N630945",
-      "bathBlockage":"N630945"
+  "bathroom": {
+    "bath": {
+      "bathTaps": "631311",
+      "sealAroundBath": "631501",
+      "bathPanel": "388001",
+      "bathBlockage": "620505"
     },
-    "showerIncludingTrayAndDoor":{
-      "electricShowerUnit":"N631131",
-      "showerTap":"N631337",
-      "showerHose":"N631111",
-      "showerHead":"N631121",
-      "showerTrayBroken":"N631103",
-      "cubicleDoorBroken":"N965003",
-      "showerDrainBlocked":"N620515"
+    "showerIncludingTrayAndDoor": {
+      "electricShowerUnit": "830025",
+      "showerTap": "631335",
+      "showerHose": "631111",
+      "showerHead": "631121",
+      "showerTrayBroken": "631143",
+      "cubicleDoorBroken": "570017",
+      "showerDrainBlocked": ""
     },
-    "sink":{
-      "taps":"N631321",
-      "damagedSink":"N630703",
-      "leakBlockage":"N620507",
-      "pipeworkLeak":"N630147"
+    "sink": {
+      "taps": "631315",
+      "damagedSink": "640003",
+      "leakBlockage": "620505",
+      "pipeworkLeak": "630107"
     },
-    "toilet":{
-      "notFlushing":"N630573",
-      "overflowing":"N630573",
-      "looseFromFloorOrWall":"N630516",
-      "cracked": "N630509"
+    "toilet": {
+      "notFlushing": "630571",
+      "overflowing": "630571",
+      "looseFromFloorOrWall": "630571",
+      "cracked": "630511"
     },
-    "wallsFloorsCeiling":{
-      "wallTiles":"N431041",
-      "floorTiles":"N432005",
-      "lightFitting":"N858111",
-      "skirtingBoardArchitrave":"N381001",
-      "plasteringCeiling":"N413105",
-      "plasteringWalls":"N411121",
-      "woodenFloorboards": "N301125"
+    "wallsFloorsCeiling": {
+      "wallTiles": "431007",
+      "floorTiles": "431505",
+      "lightFitting": "858501",
+      "skirtingBoardArchitrave": "342105",
+      "plasteringCeiling": "413105",
+      "plasteringWalls": "411121",
+      "woodenFloorboards": "305705"
     },
     "dampOrMould": {
-      "dampOrMould" : "N114001"
+      "dampOrMould": ""
     },
     "electricsExtractorCords": {
-      "spotLights": "N856615",
-      "tubeLights": "N856615",
-      "pullCord": "N862004",
-      "extractorFan": "N841007"
+      "spotLights": "858111",
+      "tubeLights": "858111",
+      "pullCord": "858111",
+      "extractorFan": "841007"
     },
     "windows": {
-      "smashed": "N551055",
-      "stuckOpen": "N315001",
-      "stuckShut": "N318125",
-      "condensation": "N318151"
+      "smashed": "315014",
+      "stuckOpen": "315049",
+      "stuckShut": "315049",
+      "condensation": ""
     },
     "damagedOrStuckDoors": {
-      "internalDoorIssue": "N330007",
-      "lockOnDoor": "N391707"
+      "internalDoorIssue": "335091",
+      "lockOnDoor": "335091"
     }
   },
   "bedroom": {
-    "wallsFloorsCeiling":{
-      "wallTiles":"N431041",
-      "floorTiles":"N432005",
-      "lightFitting":"N858111",
-      "skirtingBoardArchitrave":"N381001",
-      "plasteringCeiling":"N413105",
-      "plasteringWalls":"N411121",
-      "woodenFloorboards": "N301125"
+    "wallsFloorsCeiling": {
+      "wallTiles": "431007",
+      "floorTiles": "431505",
+      "lightFitting": "858501",
+      "skirtingBoardArchitrave": "342105",
+      "plasteringCeiling": "413105",
+      "plasteringWalls": "411121",
+      "woodenFloorboards": "305705"
     },
     "electricsLightsSwitches": {
-      "lights":"N858111",
-      "sockets": "N861511"
+      "lights": "858501",
+      "sockets": "855013"
     },
     "dampOrMould": {
-      "dampOrMould" : "N114001"
+      "dampOrMould": ""
     },
     "windows": {
-      "smashed": "N551055",
-      "stuckOpen": "N315001",
-      "stuckShut": "N318125",
-      "condensation": "N318151"
+      "smashed": "315014",
+      "stuckOpen": "315049",
+      "stuckShut": "315049",
+      "condensation": ""
     },
     "damagedOrStuckDoors": {
-      "internalDoorIssue": "N330007"
+      "internalDoorIssue": "335091"
     }
   },
   "livingAreas": {
-    "wallsFloorsCeiling":{
-      "wallTiles":"N431041",
-      "floorTiles":"N432005",
-      "lightFitting":"N858111",
-      "skirtingBoardArchitrave":"N381001",
-      "plasteringCeiling":"N413105",
-      "plasteringWalls":"N411121",
-      "woodenFloorboards": "N301125"
+    "wallsFloorsCeiling": {
+      "wallTiles": "431007",
+      "floorTiles": "431505",
+      "lightFitting": "858501",
+      "skirtingBoardArchitrave": "342105",
+      "plasteringCeiling": "413105",
+      "plasteringWalls": "411121",
+      "woodenFloorboards": "305705"
     },
     "electricsLightsSwitches": {
-      "lights":"N858111",
-      "sockets": "N861511"
+      "lights": "858501",
+      "sockets": "855013"
     },
     "dampOrMould": {
-      "dampOrMould" : "N114001"
+      "dampOrMould": ""
     },
     "windows": {
-      "smashed": "N551055",
-      "stuckOpen": "N315001",
-      "stuckShut": "N318125",
-      "condensation": "N318151"
+      "smashed": "315014",
+      "stuckOpen": "315049",
+      "stuckShut": "315049",
+      "condensation": ""
     },
     "damagedOrStuckDoors": {
-      "internalDoorIssue": "N330007"
+      "internalDoorIssue": "335091"
     },
     "stairs": {
-      "damagedSteps": "N351003",
-      "damagedPalistrades": "N351009",
-      "handRail": "N352009",
-      "stairRailLoose": "N351019"
+      "damagedSteps": "352001",
+      "damagedPalistrades": "352001",
+      "handRail": "352017",
+      "stairRailLoose": "352001"
     }
   },
   "outside": {
-    "securityLights": "N880112",
+    "securityLights": "857005",
     "door": {
-      "shedDoor": "N328101",
-      "outhouseCupboardDoor": "N330001",
-      "woodenBackDoor": "N321305",
-      "upvcBackDoor": "N325117",
-      "frenchDoors": "N325117"
+      "shedDoor": "070109",
+      "outhouseCupboardDoor": "070110",
+      "woodenBackDoor": "324123",
+      "upvcBackDoor": "325105",
+      "frenchDoors": "325106"
     },
     "roof": {
-      "shedOuthouseRoof": "N223011",
-      "loftInsulation": "N227005",
-      "looseTiles": "N201113",
-      "flatRoofProblems": "N217032"
+      "shedOuthouseRoof": "223011",
+      "loftInsulation": "",
+      "looseTiles": "223011",
+      "flatRoofProblems": "223011"
     },
     "garage": {
-      "doorDamage": "N345203",
-      "lockDamage": "N345609",
-      "brokenInto": "N345611",
-      "roofIssueOrLeak": "N217032"
+      "doorDamage": "326105",
+      "lockDamage": "326106",
+      "brokenInto": "324123",
+      "roofIssueOrLeak": "223011"
     },
     "gatesAndPathways": {
-      "frontGate": "N021001",
-      "backGate": "N021001",
-      "driveway": "N021005",
-      "concretePath": "N003007",
-      "steps": "N985501"
+      "frontGate": "021001",
+      "backGate": "021001",
+      "driveway": "003007",
+      "concretePath": "003007",
+      "steps": "013013"
     }
   }
 }
