@@ -1,11 +1,9 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using HousingRepairsOnlineApi.Domain;
 
-namespace HousingRepairsOnlineApi.UseCases
+namespace HousingRepairsOnlineApi.UseCases;
+
+public interface IBookAppointmentUseCase
 {
-    public interface IBookAppointmentUseCase
-    {
-        Task Execute(string bookingReference, string sorCode, string locationId, DateTime startDateTime,
-            DateTime endDateTime);
-    }
+    Task Execute(Repair repair);
 }

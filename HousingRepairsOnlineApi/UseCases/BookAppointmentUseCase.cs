@@ -1,28 +1,20 @@
-﻿using System;
-using System.Threading.Tasks;
-using Ardalis.GuardClauses;
+﻿using System.Threading.Tasks;
+using HousingRepairsOnlineApi.Domain;
 using HousingRepairsOnlineApi.Gateways;
 
-namespace HousingRepairsOnlineApi.UseCases
+namespace HousingRepairsOnlineApi.UseCases;
+
+public class BookAppointmentUseCase : IBookAppointmentUseCase
 {
-    public class BookAppointmentUseCase : IBookAppointmentUseCase
+    private readonly IAppointmentsGateway appointmentsGateway;
+
+    public BookAppointmentUseCase(IAppointmentsGateway appointmentsGateway)
     {
-        private readonly IAppointmentsGateway appointmentsGateway;
+        this.appointmentsGateway = appointmentsGateway;
+    }
 
-        public BookAppointmentUseCase(IAppointmentsGateway appointmentsGateway)
-        {
-            this.appointmentsGateway = appointmentsGateway;
-        }
-
-        public async Task Execute(string bookingReference, string sorCode, string locationId, DateTime startDateTime,
-            DateTime endDateTime)
-        {
-            Guard.Against.NullOrWhiteSpace(bookingReference, nameof(bookingReference));
-            Guard.Against.NullOrWhiteSpace(sorCode, nameof(sorCode));
-            Guard.Against.NullOrWhiteSpace(locationId, nameof(locationId));
-            Guard.Against.OutOfRange(endDateTime, nameof(endDateTime), startDateTime, DateTime.MaxValue);
-
-            await appointmentsGateway.BookAppointment(bookingReference, sorCode, locationId, startDateTime, endDateTime);
-        }
+    public async Task Execute(Repair repair)
+    {
+        await appointmentsGateway.BookAppointment(repair);
     }
 }

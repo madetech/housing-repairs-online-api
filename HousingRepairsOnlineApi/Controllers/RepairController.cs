@@ -6,47 +6,45 @@ using HousingRepairsOnlineApi.UseCases;
 using Microsoft.AspNetCore.Mvc;
 using Sentry;
 
-namespace HousingRepairsOnlineApi.Controllers
+namespace HousingRepairsOnlineApi.Controllers;
+
+[ApiController]
+[Route("[controller]")]
+public class RepairController : ControllerBase
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class RepairController : ControllerBase
+    private readonly IAppointmentConfirmationSender appointmentConfirmationSender;
+    private readonly IBookAppointmentUseCase bookAppointmentUseCase;
+    private readonly IInternalEmailSender internalEmailSender;
+    private readonly ISaveRepairRequestUseCase saveRepairRequestUseCase;
+
+    public RepairController(
+        ISaveRepairRequestUseCase saveRepairRequestUseCase,
+        IInternalEmailSender internalEmailSender,
+        IAppointmentConfirmationSender appointmentConfirmationSender,
+        IBookAppointmentUseCase bookAppointmentUseCase
+    )
     {
-        private readonly ISaveRepairRequestUseCase saveRepairRequestUseCase;
-        private readonly IAppointmentConfirmationSender appointmentConfirmationSender;
-        private readonly IBookAppointmentUseCase bookAppointmentUseCase;
-        private readonly IInternalEmailSender internalEmailSender;
+        this.saveRepairRequestUseCase = saveRepairRequestUseCase;
+        this.internalEmailSender = internalEmailSender;
+        this.appointmentConfirmationSender = appointmentConfirmationSender;
+        this.bookAppointmentUseCase = bookAppointmentUseCase;
+    }
 
-        public RepairController(
-            ISaveRepairRequestUseCase saveRepairRequestUseCase,
-            IInternalEmailSender internalEmailSender,
-            IAppointmentConfirmationSender appointmentConfirmationSender,
-            IBookAppointmentUseCase bookAppointmentUseCase
-        )
+    [HttpPost]
+    public async Task<IActionResult> SaveRepair([FromBody] RepairRequest repairRequest)
+    {
+        try
         {
-            this.saveRepairRequestUseCase = saveRepairRequestUseCase;
-            this.internalEmailSender = internalEmailSender;
-            this.appointmentConfirmationSender = appointmentConfirmationSender;
-            this.bookAppointmentUseCase = bookAppointmentUseCase;
+            var result = await saveRepairRequestUseCase.Execute(repairRequest);
+            await bookAppointmentUseCase.Execute(result);
+            appointmentConfirmationSender.Execute(result);
+            await internalEmailSender.Execute(result);
+            return Ok(result.Id);
         }
-
-        [HttpPost]
-        public async Task<IActionResult> SaveRepair([FromBody] RepairRequest repairRequest)
+        catch (Exception ex)
         {
-            try
-            {
-                var result = await saveRepairRequestUseCase.Execute(repairRequest);
-                await bookAppointmentUseCase.Execute(result.Id.ToString(), result.SOR, result.Address.LocationId,
-                    result.Time.StartDateTime, result.Time.EndDateTime);
-                appointmentConfirmationSender.Execute(result);
-                await internalEmailSender.Execute(result);
-                return Ok(result.Id);
-            }
-            catch (Exception ex)
-            {
-                SentrySdk.CaptureException(ex);
-                return StatusCode(500, ex.Message);
-            }
+            SentrySdk.CaptureException(ex);
+            return StatusCode(500, ex.Message);
         }
     }
 }
