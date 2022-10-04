@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using HACT.Dtos;
+using HousingRepairsOnlineApi.Domain;
+using JetBrains.Annotations;
 
-namespace HousingRepairsOnlineApi.Gateways
+namespace HousingRepairsOnlineApi.Gateways;
+
+public interface IAppointmentsGateway
 {
-    public interface IAppointmentsGateway
-    {
-        Task<IEnumerable<Appointment>> GetAvailableAppointments(string sorCode, string locationId, DateTime? fromDate = null);
+    Task<IEnumerable<Appointment>> GetAvailableAppointments(string sorCode, string locationId,
+        DateTime? fromDate = null);
 
-        Task BookAppointment(string bookingReference, string sorCode, string locationId, DateTime startDateTime, DateTime endDateTime);
-    }
+    Task BookAppointment([NotNull] Repair repair);
 }

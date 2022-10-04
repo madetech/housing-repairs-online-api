@@ -8,115 +8,91 @@ using Newtonsoft.Json;
 using RichardSzalay.MockHttp;
 using Xunit;
 
-namespace HousingRepairsOnlineApi.Tests.GatewaysTests
+namespace HousingRepairsOnlineApi.Tests.GatewaysTests;
+
+public class AppointmentGatewayTests
 {
-    public class AppointmentGatewayTests
+    private const string authenticationIdentifier = "super secret";
+    private const string SchedulingApiEndpoint = "https://our-proxy-scheduling.api";
+    private readonly MockHttpMessageHandler mockHttp;
+    private readonly AppointmentsGateway systemUnderTest;
+
+    public AppointmentGatewayTests()
     {
-        private readonly AppointmentsGateway systemUnderTest;
-        private readonly MockHttpMessageHandler mockHttp;
-        private const string authenticationIdentifier = "super secret";
-        private const string SchedulingApiEndpoint = "https://our-proxy-scheduling.api";
+        mockHttp = new MockHttpMessageHandler();
+        var httpClient = mockHttp.ToHttpClient();
+        httpClient.BaseAddress = new Uri(SchedulingApiEndpoint);
 
-        public AppointmentGatewayTests()
+        systemUnderTest = new AppointmentsGateway(httpClient, authenticationIdentifier);
+    }
+
+    [Fact]
+    public async Task GivenApiReturnsEmptyResponse_WhenGettingAvailableAppointments_EmptyResponseIsReturned()
+    {
+        // Arrange
+        const string SorCode = "SOR Code";
+        const string LocationId = "Location ID";
+
+        mockHttp.Expect($"/Appointments/AvailableAppointments?sorCode={SorCode}&locationId={LocationId}")
+            .Respond("application/json", "[]");
+
+        // Act
+        var data = await systemUnderTest.GetAvailableAppointments(SorCode, LocationId);
+
+        // Assert
+        Assert.Empty(data);
+        mockHttp.VerifyNoOutstandingExpectation();
+    }
+
+    [Fact]
+    public async Task GivenApiReturnsNonEmptyResponse_WhenGettingAvailableAppointments_NonEmptyResponseIsReturned()
+    {
+        // Arrange
+        const string SorCode = "SOR Code";
+        const string LocationId = "Location ID";
+        var year = 2021;
+        var month = 01;
+        var day = 01;
+        var expected = new Appointment
         {
-            mockHttp = new MockHttpMessageHandler();
-            var httpClient = mockHttp.ToHttpClient();
-            httpClient.BaseAddress = new Uri(SchedulingApiEndpoint);
-
-            systemUnderTest = new AppointmentsGateway(httpClient, authenticationIdentifier);
-        }
-
-        [Fact]
-        public async Task GivenApiReturnsEmptyResponse_WhenGettingAvailableAppointments_EmptyResponseIsReturned()
-        {
-            // Arrange
-            const string SorCode = "SOR Code";
-            const string LocationId = "Location ID";
-
-            mockHttp.Expect($"/Appointments/AvailableAppointments?sorCode={SorCode}&locationId={LocationId}")
-                .Respond("application/json", "[]");
-
-            // Act
-            var data = await systemUnderTest.GetAvailableAppointments(SorCode, LocationId);
-
-            // Assert
-            Assert.Empty(data);
-            mockHttp.VerifyNoOutstandingExpectation();
-        }
-
-        [Fact]
-        public async Task GivenApiReturnsNonEmptyResponse_WhenGettingAvailableAppointments_NonEmptyResponseIsReturned()
-        {
-            // Arrange
-            const string SorCode = "SOR Code";
-            const string LocationId = "Location ID";
-            var year = 2021;
-            var month = 01;
-            var day = 01;
-            var expected = new Appointment
+            Date = new DateTime(year, month, day),
+            TimeOfDay = new TimeOfDay
             {
-                Date = new DateTime(year, month, day),
-                TimeOfDay = new TimeOfDay
-                {
-                    EarliestArrivalTime = new DateTime(year, month, day, 8, 0, 0),
-                    LatestArrivalTime = new DateTime(year, month, day, 12, 0, 0),
-                }
-            };
+                EarliestArrivalTime = new DateTime(year, month, day, 8, 0, 0),
+                LatestArrivalTime = new DateTime(year, month, day, 12, 0, 0)
+            }
+        };
 
-            mockHttp.Expect($"/Appointments/AvailableAppointments?sorCode={SorCode}&locationId={LocationId}")
-                .Respond($"application/json",
-                    "[" + JsonConvert.SerializeObject(expected) + "]");
+        mockHttp.Expect($"/Appointments/AvailableAppointments?sorCode={SorCode}&locationId={LocationId}")
+            .Respond("application/json",
+                "[" + JsonConvert.SerializeObject(expected) + "]");
 
-            // Act
-            var data = await systemUnderTest.GetAvailableAppointments(SorCode, LocationId);
+        // Act
+        var data = await systemUnderTest.GetAvailableAppointments(SorCode, LocationId);
 
-            // Assert
-            data.Should().BeEquivalentTo(new[] { expected });
-            mockHttp.VerifyNoOutstandingExpectation();
-        }
+        // Assert
+        data.Should().BeEquivalentTo(new[] { expected });
+        mockHttp.VerifyNoOutstandingExpectation();
+    }
 
-        [Theory]
-        [InlineData(HttpStatusCode.Unauthorized)]
-        [InlineData(HttpStatusCode.ServiceUnavailable)]
-        public async Task GivenApiRespondsWithResponseOtherThanOk_WhenGettingAvailableAppointments_EmptyResponseIsReturned(HttpStatusCode httpStatusCode)
-        {
-            // Arrange
-            const string SorCode = "SOR Code";
-            const string LocationId = "Location ID";
+    [Theory]
+    [InlineData(HttpStatusCode.Unauthorized)]
+    [InlineData(HttpStatusCode.ServiceUnavailable)]
+    public async Task GivenApiRespondsWithResponseOtherThanOk_WhenGettingAvailableAppointments_EmptyResponseIsReturned(
+        HttpStatusCode httpStatusCode)
+    {
+        // Arrange
+        const string SorCode = "SOR Code";
+        const string LocationId = "Location ID";
 
-            mockHttp.Expect($"/Appointments/AvailableAppointments?sorCode={SorCode}&locationId={LocationId}")
-                .Respond(httpStatusCode);
+        mockHttp.Expect($"/Appointments/AvailableAppointments?sorCode={SorCode}&locationId={LocationId}")
+            .Respond(httpStatusCode);
 
-            // Act
-            var data = await systemUnderTest.GetAvailableAppointments(SorCode, LocationId);
+        // Act
+        var data = await systemUnderTest.GetAvailableAppointments(SorCode, LocationId);
 
-            // Assert
-            Assert.Empty(data);
-            mockHttp.VerifyNoOutstandingExpectation();
-        }
-
-        [Fact]
-        public async Task GivenValidParameters_WhenBookingAppointment_NoExceptionIsThrown()
-        {
-            // Arrange
-            const string SorCode = "SOR Code";
-            const string LocationId = "Location ID";
-            const string BookingReference = "Booking Reference";
-            var startDateTime = new DateTime(2022, 01, 01, 8, 0, 0);
-            var endDateTime = new DateTime(2022, 01, 01, 12, 0, 0);
-
-            mockHttp.Expect($"/Appointments/BookAppointment?bookingReference={BookingReference}&sorCode={SorCode}&locationId={LocationId}&startDateTime={startDateTime}&endDateTime={endDateTime}")
-                .Respond(HttpStatusCode.OK);
-
-            // Act
-            Func<Task> act = async () =>
-            {
-                await systemUnderTest.BookAppointment(BookingReference, SorCode, LocationId, startDateTime, endDateTime);
-            };
-
-            // Assert
-            await act.Should().NotThrowAsync<Exception>();
-            mockHttp.VerifyNoOutstandingExpectation();
-        }
+        // Assert
+        Assert.Empty(data);
+        mockHttp.VerifyNoOutstandingExpectation();
     }
 }
