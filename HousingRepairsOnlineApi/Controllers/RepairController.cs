@@ -37,8 +37,8 @@ public class RepairController : ControllerBase
         {
             var result = await saveRepairRequestUseCase.Execute(repairRequest);
             await bookAppointmentUseCase.Execute(result);
-            appointmentConfirmationSender.Execute(result);
-            await internalEmailSender.Execute(result);
+            // appointmentConfirmationSender.Execute(result);
+            // await internalEmailSender.Execute(result);
             return Ok(result.Id);
         }
         catch (Exception ex)
