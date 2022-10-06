@@ -48,6 +48,8 @@ environments:
       INTERNAL_EMAIL_NOTIFY_TEMPLATE_ID: 3a1ae813-fff6-41e0-a07a-9feb50b94737
       INTERNAL_EMAIL: FOO
       DAYS_UNTIL_IMAGE_EXPIRY: 5
+  # production:
+  #   exec: false
 
     network:
       vpc:
