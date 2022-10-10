@@ -50,6 +50,13 @@ services:
       - ../HousingManagementSystemApi/.env
     environment:
       AUTHENTICATION_IDENTIFIER: FOO
+      BUILDING_REGISTER_URI: http://buildings-register-simulator:3010
+
+  buildings-register-simulator:
+    build:
+      context: ../HousingManagementSystemApi/simulator
+    ports:
+      - "3010:3010"
 
   frontend:
     build:
