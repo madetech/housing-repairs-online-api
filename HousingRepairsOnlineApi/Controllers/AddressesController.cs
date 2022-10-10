@@ -2,34 +2,32 @@
 using System.Threading.Tasks;
 using HousingRepairsOnlineApi.UseCases;
 using Microsoft.AspNetCore.Mvc;
-using Sentry;
 
-namespace HousingRepairsOnlineApi.Controllers
+namespace HousingRepairsOnlineApi.Controllers;
+
+[ApiController]
+[Route("[controller]")]
+public class AddressesController : ControllerBase
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class AddressesController : ControllerBase
+    private readonly IRetrieveAddressesUseCase retrieveAddressesUseCase;
+
+    public AddressesController(IRetrieveAddressesUseCase retrieveAddressesUseCase)
     {
-        private readonly IRetrieveAddressesUseCase retrieveAddressesUseCase;
+        this.retrieveAddressesUseCase = retrieveAddressesUseCase;
+    }
 
-        public AddressesController(IRetrieveAddressesUseCase retrieveAddressesUseCase)
+    [HttpGet]
+    public async Task<IActionResult> Addresses([FromQuery] string postcode)
+    {
+        try
         {
-            this.retrieveAddressesUseCase = retrieveAddressesUseCase;
+            var result = await retrieveAddressesUseCase.Execute(postcode);
+            return Ok(result);
         }
-
-        [HttpGet]
-        public async Task<IActionResult> Addresses([FromQuery] string postcode)
+        catch (Exception ex)
         {
-            try
-            {
-                var result = await retrieveAddressesUseCase.Execute(postcode);
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                SentrySdk.CaptureException(ex);
-                return StatusCode(500, ex.Message);
-            }
+            Console.WriteLine(ex);
+            return StatusCode(500, ex.Message);
         }
     }
 }

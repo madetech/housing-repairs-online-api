@@ -56,12 +56,7 @@ public class Startup
 
         services.AddDatabaseDeveloperPageExceptionFilter();
 
-        services.AddTransient<IAddressGateway, AddressGateway>(s =>
-        {
-            var httpClient = s.GetService<HttpClient>();
-            httpClient.BaseAddress = new Uri(addressesApiUrl);
-            return new AddressGateway(httpClient, authenticationIdentifier);
-        });
+        services.AddTransient<IAddressGateway, AddressGateway>(s => new AddressGateway(addressesApiUrl));
 
         services.AddTransient<IAppointmentsGateway, AppointmentsGateway>(s =>
         {
