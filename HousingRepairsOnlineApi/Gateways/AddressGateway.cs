@@ -11,15 +11,18 @@ namespace HousingRepairsOnlineApi.Gateways;
 public class AddressGateway : IAddressGateway
 {
     private readonly string _addressesApiUrl;
+    private readonly string _addressesOrganisationId;
 
-    public AddressGateway(string addressesApiUrl)
+    public AddressGateway(string addressesApiUrl, string addressesOrganisationId)
     {
         _addressesApiUrl = addressesApiUrl;
+        _addressesOrganisationId = addressesOrganisationId;
     }
 
     public async Task<IEnumerable<Address>> Search(string postcode)
     {
         var response = await _addressesApiUrl.AppendPathSegment("/addresses").SetQueryParam("postcode", postcode)
+            .WithHeader("organisation_id", _addressesOrganisationId)
             .GetAsync()
             .ReceiveJson<List<BuildingsRegisterAddress>>();
 
