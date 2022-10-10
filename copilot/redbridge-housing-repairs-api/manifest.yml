@@ -35,7 +35,8 @@ environments:
     variables:
       AUTHENTICATION_IDENTIFIER: FOO
       JWT_SECRET: FOO
-      ADDRESSES_API_URL: http://redbridge-housing-repairs-hms-api.development.saas.local
+      ADDRESSES_API_URL: http://rnd-buildings-register.development.saas.local:3010
+      ADDRESSES_ORGANISATION_ID: redbridge.development.saas.by.madetech.com
       SCHEDULING_API_URL: http://redbridge-housing-repairs-scheduling-api.development.saas.local
       # Database
       DB_NAME: RedbridgeDluhcHousingRepairs
