@@ -38,6 +38,7 @@ public class Startup
         services.AddTransient<IBookAppointmentUseCase, BookAppointmentUseCase>();
 
         var addressesApiUrl = GetEnvironmentVariable("ADDRESSES_API_URL");
+        var addressesOrganisationId = GetEnvironmentVariable("ADDRESSES_ORGANISATION_ID");
         var schedulingApiUrl = GetEnvironmentVariable("SCHEDULING_API_URL");
         var authenticationIdentifier = GetEnvironmentVariable("AUTHENTICATION_IDENTIFIER");
         services.AddHttpClient();
@@ -56,7 +57,8 @@ public class Startup
 
         services.AddDatabaseDeveloperPageExceptionFilter();
 
-        services.AddTransient<IAddressGateway, AddressGateway>(s => new AddressGateway(addressesApiUrl));
+        services.AddTransient<IAddressGateway, AddressGateway>(s =>
+            new AddressGateway(addressesApiUrl, addressesOrganisationId));
 
         services.AddTransient<IAppointmentsGateway, AppointmentsGateway>(s =>
         {

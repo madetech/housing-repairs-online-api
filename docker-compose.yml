@@ -14,6 +14,7 @@ services:
     environment:
       SCHEDULING_API_URL: http://scheduling
       ADDRESSES_API_URL: http://buildings-register-simulator:3010
+      ADDRESSES_ORGANISATION_ID: foo 
       DB_USERNAME: housing_repairs
       DB_PASSWORD: password
       DB_HOST: postgres
