@@ -1,40 +1,28 @@
 ﻿using System.Collections.Generic;
-using System.Net;
-using System.Net.Http;
-using System.Net.Http.Json;
 using System.Threading.Tasks;
-using HACT.Dtos;
-using HousingRepairsOnline.Authentication.Helpers;
+using Flurl;
+using Flurl.Http;
+using HousingRepairsOnlineApi.Domain;
+using HousingRepairsOnlineApi.Dtos;
+using HousingRepairsOnlineApi.Extensions;
 
-namespace HousingRepairsOnlineApi.Gateways
+namespace HousingRepairsOnlineApi.Gateways;
+
+public class AddressGateway : IAddressGateway
 {
-    public class AddressGateway : IAddressGateway
+    private readonly string _addressesApiUrl;
+
+    public AddressGateway(string addressesApiUrl)
     {
-        private readonly HttpClient httpClient;
-        private string authenticationIdentifier;
+        _addressesApiUrl = addressesApiUrl;
+    }
 
-        public AddressGateway(HttpClient httpClient, string authenticationIdentifier)
-        {
-            this.httpClient = httpClient;
-            this.authenticationIdentifier = authenticationIdentifier;
-        }
+    public async Task<IEnumerable<Address>> Search(string postcode)
+    {
+        var response = await _addressesApiUrl.AppendPathSegment("/addresses").SetQueryParam("postcode", postcode)
+            .GetAsync()
+            .ReceiveJson<List<BuildingsRegisterAddress>>();
 
-        public async Task<IEnumerable<PropertyAddress>> Search(string postcode)
-        {
-            var request = new HttpRequestMessage(HttpMethod.Get,
-                $"/addresses?postcode={postcode}");
-
-            request.SetupJwtAuthentication(httpClient, authenticationIdentifier);
-
-            var response = await httpClient.SendAsync(request);
-
-            var data = new List<PropertyAddress>();
-            if (response.StatusCode == HttpStatusCode.OK)
-            {
-                data = await response.Content.ReadFromJsonAsync<List<PropertyAddress>>();
-            }
-
-            return data;
-        }
+        return response.ToAddresses();
     }
 }
