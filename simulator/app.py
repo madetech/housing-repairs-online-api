@@ -24,7 +24,7 @@ def get_by_id(id):
 @app.route("/addresses")
 def get_by_postcode():
     if "postcode" in request.args:
-        if request.args["postcode"].replace(" ", "").lower() == "E112LE".lower():
+        if request.args["postcode"] == "E112LE":
             return [
                 {
                     "id": "94e12c7b-c60c-4b13-ae7a-b8a375250418",
