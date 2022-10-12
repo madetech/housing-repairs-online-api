@@ -5,10 +5,11 @@ using HousingRepairsOnlineApi.Controllers;
 using HousingRepairsOnlineApi.Domain;
 using HousingRepairsOnlineApi.Helpers;
 using HousingRepairsOnlineApi.UseCases;
+using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using Xunit;
 
-namespace HousingRepairsOnlineApi.Tests;
+namespace HousingRepairsOnlineApi.Tests.ControllersTests;
 
 public class RepairRequestsControllerTests : ControllerTests
 {
@@ -33,7 +34,7 @@ public class RepairRequestsControllerTests : ControllerTests
         bookAppointmentUseCaseMock = new Mock<IBookAppointmentUseCase>();
         appointmentConfirmationSender = new Mock<IAppointmentConfirmationSender>();
         internalEmailSender = new Mock<IInternalEmailSender>();
-        systemUnderTest = new RepairController(saveRepairRequestUseCaseMock.Object, internalEmailSender.Object,
+        systemUnderTest = new RepairController(NullLogger<RepairController>.Instance, saveRepairRequestUseCaseMock.Object, internalEmailSender.Object,
             appointmentConfirmationSender.Object, bookAppointmentUseCaseMock.Object);
     }
 

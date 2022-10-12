@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
+using HousingRepairsOnlineApi.Extensions;
 using HousingRepairsOnlineApi.UseCases;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace HousingRepairsOnlineApi.Controllers;
 
@@ -10,10 +12,14 @@ namespace HousingRepairsOnlineApi.Controllers;
 public class AddressesController : ControllerBase
 {
     private readonly IRetrieveAddressesUseCase retrieveAddressesUseCase;
+    private readonly ILogger<AddressesController> logger;
 
-    public AddressesController(IRetrieveAddressesUseCase retrieveAddressesUseCase)
+    public AddressesController(
+        IRetrieveAddressesUseCase retrieveAddressesUseCase,
+        ILogger<AddressesController> logger)
     {
         this.retrieveAddressesUseCase = retrieveAddressesUseCase;
+        this.logger = logger;
     }
 
     [HttpGet]
@@ -26,7 +32,7 @@ public class AddressesController : ControllerBase
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex);
+            logger.ErrorRetrievingAddresses(postcode, ex);
             return StatusCode(500, ex.Message);
         }
     }
