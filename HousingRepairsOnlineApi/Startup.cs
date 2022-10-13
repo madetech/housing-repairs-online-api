@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net.Http;
 using Azure.Storage.Blobs;
+using HashidsNet;
 using HousingRepairsOnline.Authentication.DependencyInjection;
 using HousingRepairsOnlineApi.Domain;
 using HousingRepairsOnlineApi.Gateways;
@@ -32,6 +33,7 @@ public class Startup
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddSoREngine("SoRConfig.json");
+        services.AddHasher(GetEnvironmentVariable("HASHIDS_SALT"));
 
         services.AddTransient<IRetrieveAddressesUseCase, RetrieveAddressesUseCase>();
         services.AddTransient<IRetrieveAvailableAppointmentsUseCase, RetrieveAvailableAppointmentsUseCase>();
@@ -64,7 +66,8 @@ public class Startup
         {
             var httpClient = s.GetService<HttpClient>();
             httpClient.BaseAddress = new Uri(schedulingApiUrl);
-            return new AppointmentsGateway(httpClient, authenticationIdentifier);
+            var hasher = s.GetService<IHashids>();
+            return new AppointmentsGateway(httpClient, authenticationIdentifier, hasher);
         });
 
         var notifyApiKey = GetEnvironmentVariable("GOV_NOTIFY_KEY");

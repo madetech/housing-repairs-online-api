@@ -3,6 +3,7 @@ using System.Net;
 using System.Threading.Tasks;
 using FluentAssertions;
 using HACT.Dtos;
+using HashidsNet;
 using HousingRepairsOnlineApi.Gateways;
 using Newtonsoft.Json;
 using RichardSzalay.MockHttp;
@@ -22,8 +23,9 @@ public class AppointmentGatewayTests
         mockHttp = new MockHttpMessageHandler();
         var httpClient = mockHttp.ToHttpClient();
         httpClient.BaseAddress = new Uri(SchedulingApiEndpoint);
+        var hasher = new Hashids("salty");
 
-        systemUnderTest = new AppointmentsGateway(httpClient, authenticationIdentifier);
+        systemUnderTest = new AppointmentsGateway(httpClient, authenticationIdentifier, hasher);
     }
 
     [Fact]

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using HashidsNet;
 using HousingRepairsOnlineApi.Domain;
 using HousingRepairsOnlineApi.Extensions;
 using HousingRepairsOnlineApi.Helpers;
@@ -15,16 +16,18 @@ public class RepairController : ControllerBase
 {
     private readonly IAppointmentConfirmationSender appointmentConfirmationSender;
     private readonly IBookAppointmentUseCase bookAppointmentUseCase;
+    private readonly IHashids hasher;
     private readonly IInternalEmailSender internalEmailSender;
-    private readonly ISaveRepairRequestUseCase saveRepairRequestUseCase;
     private readonly ILogger<RepairController> logger;
+    private readonly ISaveRepairRequestUseCase saveRepairRequestUseCase;
 
     public RepairController(
         ILogger<RepairController> logger,
         ISaveRepairRequestUseCase saveRepairRequestUseCase,
         IInternalEmailSender internalEmailSender,
         IAppointmentConfirmationSender appointmentConfirmationSender,
-        IBookAppointmentUseCase bookAppointmentUseCase
+        IBookAppointmentUseCase bookAppointmentUseCase,
+        IHashids hasher
     )
     {
         this.logger = logger;
@@ -32,6 +35,7 @@ public class RepairController : ControllerBase
         this.internalEmailSender = internalEmailSender;
         this.appointmentConfirmationSender = appointmentConfirmationSender;
         this.bookAppointmentUseCase = bookAppointmentUseCase;
+        this.hasher = hasher;
     }
 
     [HttpPost]
@@ -45,7 +49,7 @@ public class RepairController : ControllerBase
             // await internalEmailSender.Execute(result);
 
             logger.AfterAddRepair(result.Id);
-            return Ok(result.Id);
+            return Ok(result.GetReference(hasher));
         }
         catch (Exception ex)
         {

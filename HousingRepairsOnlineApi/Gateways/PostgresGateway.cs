@@ -6,8 +6,8 @@ namespace HousingRepairsOnlineApi.Gateways;
 
 public class PostgresGateway : IRepairStorageGateway
 {
-    private readonly IIdGenerator idGenerator;
     private readonly RepairContext context;
+    private readonly IIdGenerator idGenerator;
 
     public PostgresGateway(IIdGenerator idGenerator, RepairContext context)
     {
@@ -17,7 +17,6 @@ public class PostgresGateway : IRepairStorageGateway
 
     public async Task<Repair> AddRepair(Repair repair)
     {
-        repair.Id = idGenerator.Generate();
         context.Repairs.Add(repair);
         var result = await context.SaveChangesAsync();
 

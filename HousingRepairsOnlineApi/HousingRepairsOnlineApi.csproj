@@ -15,6 +15,7 @@
     <PackageReference Include="Flurl.Http" Version="3.2.4" />
     <PackageReference Include="GovukNotify" Version="4.0.1" />
     <PackageReference Include="HACT.Dtos" Version="1.1.0" />
+    <PackageReference Include="Hashids.net" Version="1.6.1" />
     <PackageReference Include="HousingRepairsOnline.Authentication" Version="1.1.0" />
     <PackageReference Include="JWT" Version="8.4.2" />
     <PackageReference Include="JWT.Extensions.AspNetCore" Version="7.3.3" />
@@ -31,6 +32,10 @@
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.6" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
     <PackageReference Include="System.IO.Abstractions" Version="13.2.47" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Migrations" />
   </ItemGroup>
 
 </Project>
