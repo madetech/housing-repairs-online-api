@@ -1,17 +1,14 @@
 ﻿using System.Threading.Tasks;
 using HousingRepairsOnlineApi.Domain;
-using HousingRepairsOnlineApi.Helpers;
 
 namespace HousingRepairsOnlineApi.Gateways;
 
 public class PostgresGateway : IRepairStorageGateway
 {
     private readonly RepairContext context;
-    private readonly IIdGenerator idGenerator;
 
-    public PostgresGateway(IIdGenerator idGenerator, RepairContext context)
+    public PostgresGateway(RepairContext context)
     {
-        this.idGenerator = idGenerator;
         this.context = context;
     }
 

@@ -119,8 +119,6 @@ public class Startup
         services.AddTransient<ISaveRepairRequestUseCase, SaveRepairRequestUseCase>();
         services.AddTransient<IInternalEmailSender, InternalEmailSender>();
 
-        services.AddTransient<IIdGenerator, IdGenerator>();
-
         services.AddTransient<IRepairStorageGateway, PostgresGateway>();
 
         //var blobContainerClient = GetBlobContainerClient();
