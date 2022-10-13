@@ -25,6 +25,7 @@ secrets:
   DB_USERNAME: "/redbridge/database/username"
   DB_PASSWORD: "/redbridge/database/password"
   GOV_NOTIFY_KEY: "/redbridge/govnotify/apikey"
+  HASHIDS_SALT: "/redbridge/hro/customer_reference/salt"
 
   # You can refer to a specific key in the JSON blob.
 
