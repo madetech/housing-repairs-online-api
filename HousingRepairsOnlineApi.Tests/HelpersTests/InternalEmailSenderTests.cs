@@ -1,50 +1,51 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using HousingRepairsOnlineApi.Domain;
 using HousingRepairsOnlineApi.Helpers;
 using HousingRepairsOnlineApi.UseCases;
 using Moq;
 using Xunit;
 
-namespace HousingRepairsOnlineApi.Tests.HelpersTests
+namespace HousingRepairsOnlineApi.Tests.HelpersTests;
+
+public class InternalEmailSenderTests
 {
-    public class InternalEmailSenderTests
+    private Mock<IInternalEmailSender> internalEmailSender;
+    private readonly Mock<IRetrieveImageLinkUseCase> retrieveImageLinkUseCase;
+    private readonly Mock<ISendInternalEmailUseCase> sendInternalEmailUseCase;
+    private readonly InternalEmailSender systemUnderTest;
+
+    public InternalEmailSenderTests()
     {
-        private InternalEmailSender systemUnderTest;
-        private Mock<IInternalEmailSender> internalEmailSender;
-        private Mock<IRetrieveImageLinkUseCase> retrieveImageLinkUseCase;
-        private Mock<ISendInternalEmailUseCase> sendInternalEmailUseCase;
+        retrieveImageLinkUseCase = new Mock<IRetrieveImageLinkUseCase>();
+        internalEmailSender = new Mock<IInternalEmailSender>();
+        sendInternalEmailUseCase = new Mock<ISendInternalEmailUseCase>();
+        systemUnderTest = new InternalEmailSender(retrieveImageLinkUseCase.Object, sendInternalEmailUseCase.Object);
+    }
 
-        public InternalEmailSenderTests()
+    [Fact]
+    public async Task GivenARetrieveImageLink_WhenExecute_ThenSendInternalEmailUseCaseIsCalled()
+    {
+        var repair = new Repair
         {
-            retrieveImageLinkUseCase = new Mock<IRetrieveImageLinkUseCase>();
-            internalEmailSender = new Mock<IInternalEmailSender>();
-            sendInternalEmailUseCase = new Mock<ISendInternalEmailUseCase>();
-            systemUnderTest = new InternalEmailSender(retrieveImageLinkUseCase.Object, sendInternalEmailUseCase.Object);
+            Id = 1,
+            ContactDetails = new RepairContactDetails { Value = "07465087654" },
+            Address = new RepairAddress { Display = "address", LocationId = "uprn" },
+            Description =
+                new RepairDescription
+                {
+                    Text = "repair description", Base64Image = "image", PhotoUrl = "x/Url.png"
+                },
+            Location = new RepairLocation { Value = "location" },
+            Problem = new RepairProblem { Value = "problem" },
+            Issue = new RepairIssue { Value = "issue" },
+            SOR = "sor"
+        };
 
-        }
+        retrieveImageLinkUseCase.Setup(x => x.Execute(repair.Description.PhotoUrl)).Returns("Url.png");
 
-        [Fact]
-        public async Task GivenARetrieveImageLink_WhenExecute_ThenSendInternalEmailUseCaseIsCalled()
-        {
+        await systemUnderTest.Execute(repair);
 
-            var repair = new Repair
-            {
-                Id = new Guid(),
-                ContactDetails = new RepairContactDetails { Value = "07465087654" },
-                Address = new RepairAddress { Display = "address", LocationId = "uprn" },
-                Description = new RepairDescription { Text = "repair description", Base64Image = "image", PhotoUrl = "x/Url.png" },
-                Location = new RepairLocation { Value = "location" },
-                Problem = new RepairProblem { Value = "problem" },
-                Issue = new RepairIssue { Value = "issue" },
-                SOR = "sor"
-            };
-
-            retrieveImageLinkUseCase.Setup(x => x.Execute(repair.Description.PhotoUrl)).Returns("Url.png");
-
-            await systemUnderTest.Execute(repair);
-
-            sendInternalEmailUseCase.Verify(x => x.Execute(
+        sendInternalEmailUseCase.Verify(x => x.Execute(
                 repair.Id.ToString(),
                 repair.Address.LocationId,
                 repair.Address.Display,
@@ -52,38 +53,36 @@ namespace HousingRepairsOnlineApi.Tests.HelpersTests
                 repair.Description.Text,
                 repair.ContactDetails.Value,
                 "Url.png"),
-                Times.Once);
-        }
+            Times.Once);
+    }
 
-        [Fact]
-        public async Task GivenNoRetrieveImageLink_WhenExecute_ThenSendInternalEmailUseCaseIsCalled()
+    [Fact]
+    public async Task GivenNoRetrieveImageLink_WhenExecute_ThenSendInternalEmailUseCaseIsCalled()
+    {
+        var repair = new Repair
         {
+            Id = 1,
+            ContactDetails = new RepairContactDetails { Value = "07465087654" },
+            Address = new RepairAddress { Display = "address", LocationId = "uprn" },
+            Description = new RepairDescription { Text = "repair description", Base64Image = "" },
+            Location = new RepairLocation { Value = "location" },
+            Problem = new RepairProblem { Value = "problem" },
+            Issue = new RepairIssue { Value = "issue" },
+            SOR = "sor"
+        };
 
-            var repair = new Repair
-            {
-                Id = new Guid(),
-                ContactDetails = new RepairContactDetails { Value = "07465087654" },
-                Address = new RepairAddress { Display = "address", LocationId = "uprn" },
-                Description = new RepairDescription { Text = "repair description", Base64Image = "" },
-                Location = new RepairLocation { Value = "location" },
-                Problem = new RepairProblem { Value = "problem" },
-                Issue = new RepairIssue { Value = "issue" },
-                SOR = "sor"
-            };
+        retrieveImageLinkUseCase.Setup(x => x.Execute(repair.Description.PhotoUrl)).Returns("");
 
-            retrieveImageLinkUseCase.Setup(x => x.Execute(repair.Description.PhotoUrl)).Returns("");
+        await systemUnderTest.Execute(repair);
 
-            await systemUnderTest.Execute(repair);
-
-            sendInternalEmailUseCase.Verify(x => x.Execute(
-                    repair.Id.ToString(),
-                    repair.Address.LocationId,
-                    repair.Address.Display,
-                    repair.SOR,
-                    repair.Description.Text,
-                    repair.ContactDetails.Value,
-                    "none"),
-                Times.Never);
-        }
+        sendInternalEmailUseCase.Verify(x => x.Execute(
+                repair.Id.ToString(),
+                repair.Address.LocationId,
+                repair.Address.Display,
+                repair.SOR,
+                repair.Description.Text,
+                repair.ContactDetails.Value,
+                "none"),
+            Times.Never);
     }
 }

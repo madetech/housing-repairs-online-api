@@ -1,3 +1,4 @@
+using HashidsNet;
 using HousingRepairsOnlineApi.Domain;
 using HousingRepairsOnlineApi.Dtos;
 
@@ -5,11 +6,11 @@ namespace HousingRepairsOnlineApi.Extensions;
 
 public static class RepairExtensions
 {
-    public static BookAppointmentRequest ToBookAppointmentRequest(this Repair repair)
+    public static BookAppointmentRequest ToBookAppointmentRequest(this Repair repair, IHashids hasher)
     {
         return new BookAppointmentRequest
         {
-            Reference = repair.Id.ToString(),
+            Reference = repair.GetReference(hasher),
             Appointment =
                 new Appointment { StartTime = repair.Time.StartDateTime, EndTime = repair.Time.EndDateTime },
             ContactDetails = new ContactDetails

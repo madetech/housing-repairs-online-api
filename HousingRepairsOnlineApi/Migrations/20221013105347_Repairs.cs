@@ -1,6 +1,6 @@
-﻿using System;
-using HousingRepairsOnlineApi.Domain;
+﻿using HousingRepairsOnlineApi.Domain;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
@@ -14,7 +14,8 @@ namespace HousingRepairsOnlineApi.Migrations
                 name: "repair",
                 columns: table => new
                 {
-                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     postcode = table.Column<string>(type: "text", nullable: true),
                     sor = table.Column<string>(type: "text", nullable: true),
                     address = table.Column<RepairAddress>(type: "jsonb", nullable: true),

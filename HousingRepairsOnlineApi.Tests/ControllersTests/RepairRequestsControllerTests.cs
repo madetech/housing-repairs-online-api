@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using FluentAssertions;
+using HashidsNet;
 using HousingRepairsOnlineApi.Controllers;
 using HousingRepairsOnlineApi.Domain;
 using HousingRepairsOnlineApi.Helpers;
@@ -34,8 +35,9 @@ public class RepairRequestsControllerTests : ControllerTests
         bookAppointmentUseCaseMock = new Mock<IBookAppointmentUseCase>();
         appointmentConfirmationSender = new Mock<IAppointmentConfirmationSender>();
         internalEmailSender = new Mock<IInternalEmailSender>();
-        systemUnderTest = new RepairController(NullLogger<RepairController>.Instance, saveRepairRequestUseCaseMock.Object, internalEmailSender.Object,
-            appointmentConfirmationSender.Object, bookAppointmentUseCaseMock.Object);
+        systemUnderTest = new RepairController(NullLogger<RepairController>.Instance,
+            saveRepairRequestUseCaseMock.Object, internalEmailSender.Object,
+            appointmentConfirmationSender.Object, bookAppointmentUseCaseMock.Object, new Hashids("salt"));
     }
 
     // [Fact]
