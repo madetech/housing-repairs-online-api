@@ -3,66 +3,75 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using HousingRepairsOnlineApi.Controllers;
 using HousingRepairsOnlineApi.UseCases;
+using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using Xunit;
 
-namespace HousingRepairsOnlineApi.Tests.ControllersTests
+namespace HousingRepairsOnlineApi.Tests.ControllersTests;
+
+public class AppointmentsControllerTests : ControllerTests
 {
-    public class AppointmentsControllerTests : ControllerTests
+    private readonly Mock<IRetrieveAvailableAppointmentsUseCase> availableAppointmentsUseCaseMock;
+    private readonly AppointmentsController systemUndertest;
+
+    public AppointmentsControllerTests()
     {
-        private AppointmentsController systemUndertest;
-        private Mock<IRetrieveAvailableAppointmentsUseCase> availableAppointmentsUseCaseMock;
-        public AppointmentsControllerTests()
-        {
-            availableAppointmentsUseCaseMock = new Mock<IRetrieveAvailableAppointmentsUseCase>();
-            systemUndertest = new AppointmentsController(availableAppointmentsUseCaseMock.Object);
-        }
+        availableAppointmentsUseCaseMock = new Mock<IRetrieveAvailableAppointmentsUseCase>();
+        systemUndertest = new AppointmentsController(
+            availableAppointmentsUseCaseMock.Object,
+            NullLogger<AppointmentsController>.Instance);
+    }
 
-        [Fact]
-        public async Task TestEndpoint()
-        {
-            const string RepairLocation = "kitchen";
-            const string RepairProblem = "cupboards";
-            const string RepairIssue = "doorHangingOff";
+    [Fact]
+    public async Task TestEndpoint()
+    {
+        const string RepairLocation = "kitchen";
+        const string RepairProblem = "cupboards";
+        const string RepairIssue = "doorHangingOff";
 
-            const string Uprn = "12345";
-            var result = await systemUndertest.AvailableAppointments(RepairLocation, RepairProblem, RepairIssue, Uprn);
-            GetStatusCode(result).Should().Be(200);
-            availableAppointmentsUseCaseMock.Verify(x => x.Execute(RepairLocation, RepairProblem, RepairIssue, Uprn, null), Times.Once);
-        }
+        const string Uprn = "12345";
+        var result = await systemUndertest.AvailableAppointments(RepairLocation, RepairProblem, RepairIssue, Uprn);
+        GetStatusCode(result).Should().Be(200);
+        availableAppointmentsUseCaseMock.Verify(x => x.Execute(RepairLocation, RepairProblem, RepairIssue, Uprn, null),
+            Times.Once);
+    }
 
-        [Fact]
-        public async Task GivenAFromDate_WhenRequestingAvailableAppointments_ThenResultsAreReturned()
-        {
-            // Arrange
-            const string RepairLocation = "kitchen";
-            const string RepairProblem = "cupboards";
-            const string RepairIssue = "doorHangingOff";
-            const string LocationId = "location ID";
-            var fromDate = new DateTime(2021, 12, 15);
+    [Fact]
+    public async Task GivenAFromDate_WhenRequestingAvailableAppointments_ThenResultsAreReturned()
+    {
+        // Arrange
+        const string RepairLocation = "kitchen";
+        const string RepairProblem = "cupboards";
+        const string RepairIssue = "doorHangingOff";
+        const string LocationId = "location ID";
+        var fromDate = new DateTime(2021, 12, 15);
 
-            // Act
-            var result = await systemUndertest.AvailableAppointments(RepairLocation, RepairProblem, RepairIssue, LocationId);
+        // Act
+        var result =
+            await systemUndertest.AvailableAppointments(RepairLocation, RepairProblem, RepairIssue, LocationId);
 
-            // Assert
-            GetStatusCode(result).Should().Be(200);
-            availableAppointmentsUseCaseMock.Verify(x => x.Execute(RepairLocation, RepairProblem, RepairIssue, LocationId, null), Times.Once);
-        }
+        // Assert
+        GetStatusCode(result).Should().Be(200);
+        availableAppointmentsUseCaseMock.Verify(
+            x => x.Execute(RepairLocation, RepairProblem, RepairIssue, LocationId, null), Times.Once);
+    }
 
-        [Fact]
-        public async Task ReturnsErrorWhenFailsToSave()
-        {
-            const string RepairLocation = "kitchen";
-            const string RepairProblem = "cupboards";
-            const string RepairIssue = "doorHangingOff";
-            const string LocationId = "location ID";
-            var fromDate = new DateTime(2021, 12, 15);
+    [Fact]
+    public async Task ReturnsErrorWhenFailsToSave()
+    {
+        const string RepairLocation = "kitchen";
+        const string RepairProblem = "cupboards";
+        const string RepairIssue = "doorHangingOff";
+        const string LocationId = "location ID";
+        var fromDate = new DateTime(2021, 12, 15);
 
-            availableAppointmentsUseCaseMock.Setup(x => x.Execute(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTime>())).Throws<System.Exception>();
+        availableAppointmentsUseCaseMock.Setup(x => x.Execute(It.IsAny<string>(), It.IsAny<string>(),
+            It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTime>())).Throws<Exception>();
 
-            var result = await systemUndertest.AvailableAppointments(RepairLocation, RepairProblem, RepairIssue, LocationId, fromDate);
+        var result =
+            await systemUndertest.AvailableAppointments(RepairLocation, RepairProblem, RepairIssue, LocationId,
+                fromDate);
 
-            GetStatusCode(result).Should().Be(500);
-        }
+        GetStatusCode(result).Should().Be(500);
     }
 }

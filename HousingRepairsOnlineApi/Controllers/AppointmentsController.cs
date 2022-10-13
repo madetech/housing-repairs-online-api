@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
+using HousingRepairsOnlineApi.Extensions;
 using HousingRepairsOnlineApi.UseCases;
 using Microsoft.AspNetCore.Mvc;
-using Sentry;
+using Microsoft.Extensions.Logging;
 
 namespace HousingRepairsOnlineApi.Controllers
 {
@@ -11,10 +12,14 @@ namespace HousingRepairsOnlineApi.Controllers
     public class AppointmentsController : ControllerBase
     {
         private readonly IRetrieveAvailableAppointmentsUseCase retrieveAvailableAppointmentsUseCase;
+        private readonly ILogger<AppointmentsController> logger;
 
-        public AppointmentsController(IRetrieveAvailableAppointmentsUseCase retrieveAvailableAppointmentsUseCase)
+        public AppointmentsController(
+            IRetrieveAvailableAppointmentsUseCase retrieveAvailableAppointmentsUseCase,
+            ILogger<AppointmentsController> logger)
         {
             this.retrieveAvailableAppointmentsUseCase = retrieveAvailableAppointmentsUseCase;
+            this.logger = logger;
         }
 
         [HttpGet]
@@ -33,7 +38,7 @@ namespace HousingRepairsOnlineApi.Controllers
             }
             catch (Exception ex)
             {
-                SentrySdk.CaptureException(ex);
+                logger.ErrorRetrievingAppointments(ex);
                 return StatusCode(500, ex.Message);
             }
         }

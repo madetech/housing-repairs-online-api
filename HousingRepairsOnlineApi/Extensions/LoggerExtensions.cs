@@ -28,5 +28,13 @@ public static class LoggerExtensions
                 LogLevel.Error, 3, "Error retrieving addresses with postcode {Pc}");
 
     public static void ErrorRetrievingAddresses(this ILogger logger, string postcode, Exception ex) =>
-        ErrorRetrievingAddresses(logger, postcode, ex);
+        ErrorRetrievingAddressesMessageDefinition(logger,postcode, ex);
+
+    private static readonly Action<ILogger, Exception> ErrorRetrievingAppointmentsDefinition =
+        LoggerMessage
+            .Define(
+                LogLevel.Error, 4, "Failed to fetch appointments");
+
+    public static void ErrorRetrievingAppointments(this ILogger logger, Exception ex) =>
+        ErrorRetrievingAppointmentsDefinition(logger, ex);
 }
