@@ -1,4 +1,5 @@
-﻿using HousingRepairsOnlineApi.Domain;
+﻿using HashidsNet;
+using HousingRepairsOnlineApi.Domain;
 using HousingRepairsOnlineApi.Helpers;
 using HousingRepairsOnlineApi.UseCases;
 using Moq;
@@ -17,7 +18,7 @@ public class AppointmentConfirmationSenderTests
         sendAppointmentConfirmationEmailUseCaseMock = new Mock<ISendAppointmentConfirmationEmailUseCase>();
         sendAppointmentConfirmationSmsUseCaseMock = new Mock<ISendAppointmentConfirmationSmsUseCase>();
         systemUnderTest = new AppointmentConfirmationSender(sendAppointmentConfirmationEmailUseCaseMock.Object,
-            sendAppointmentConfirmationSmsUseCaseMock.Object);
+            sendAppointmentConfirmationSmsUseCaseMock.Object,new Hashids("salt"));
     }
 
     [Fact]

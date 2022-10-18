@@ -34,51 +34,48 @@ public class RepairRequestsControllerTests : ControllerTests
         saveRepairRequestUseCaseMock = new Mock<ISaveRepairRequestUseCase>();
         bookAppointmentUseCaseMock = new Mock<IBookAppointmentUseCase>();
         appointmentConfirmationSender = new Mock<IAppointmentConfirmationSender>();
-        internalEmailSender = new Mock<IInternalEmailSender>();
         systemUnderTest = new RepairController(NullLogger<RepairController>.Instance,
-            saveRepairRequestUseCaseMock.Object, internalEmailSender.Object,
+            saveRepairRequestUseCaseMock.Object,
             appointmentConfirmationSender.Object, bookAppointmentUseCaseMock.Object, new Hashids("salt"));
     }
 
-    // [Fact]
-    // public async Task TestEndpoint()
-    // {
-    //     var repairRequest = new RepairRequest
-    //     {
-    //         ContactDetails = new RepairContactDetails { Value = "07465087654" },
-    //         Address = new RepairAddress { Display = "address", LocationId = "uprn" },
-    //         Description = new RepairDescriptionRequest { Text = "repair description", Base64Img = "image" },
-    //         Location = new RepairLocation { Value = "location" },
-    //         Problem = new RepairProblem { Value = "problem" },
-    //         Issue = new RepairIssue { Value = "issue" }
-    //     };
-    //
-    //     var repair = new Repair
-    //     {
-    //         Id = new Guid(),
-    //         ContactDetails = new RepairContactDetails { Value = "07465087654" },
-    //         Address = new RepairAddress { Display = "address", LocationId = "uprn" },
-    //         Description =
-    //             new RepairDescription { Text = "repair description", Base64Image = "image", PhotoUrl = "x/Url.png" },
-    //         Location = new RepairLocation { Value = "location" },
-    //         Problem = new RepairProblem { Value = "problem" },
-    //         Issue = new RepairIssue { Value = "issue" },
-    //         SOR = "sor",
-    //         Time = repairAvailability
-    //     };
-    //
-    //     saveRepairRequestUseCaseMock.Setup(x => x.Execute(It.IsAny<RepairRequest>())).ReturnsAsync(repair);
-    //
-    //     var result = await systemUnderTest.SaveRepair(repairRequest);
-    //
-    //     GetStatusCode(result).Should().Be(200);
-    //
-    //
-    //     saveRepairRequestUseCaseMock.Verify(x => x.Execute(repairRequest), Times.Once);
-    //
-    //     internalEmailSender.Verify(x => x.Execute(repair), Times.Once);
-    // }
-    //
+    [Fact]
+    public async Task TestEndpoint()
+    {
+        var repairRequest = new RepairRequest
+        {
+            ContactDetails = new RepairContactDetails { Value = "07465087654" },
+            Address = new RepairAddress { Display = "address", LocationId = "uprn" },
+            Description = new RepairDescriptionRequest { Text = "repair description", Base64Img = "image" },
+            Location = new RepairLocation { Value = "location" },
+            Problem = new RepairProblem { Value = "problem" },
+            Issue = new RepairIssue { Value = "issue" }
+        };
+
+        var repair = new Repair
+        {
+            Id = 1,
+            ContactDetails = new RepairContactDetails { Value = "07465087654" },
+            Address = new RepairAddress { Display = "address", LocationId = "uprn" },
+            Description =
+                new RepairDescription { Text = "repair description", Base64Image = "image", PhotoUrl = "x/Url.png" },
+            Location = new RepairLocation { Value = "location" },
+            Problem = new RepairProblem { Value = "problem" },
+            Issue = new RepairIssue { Value = "issue" },
+            SOR = "sor",
+            Time = repairAvailability
+        };
+
+        saveRepairRequestUseCaseMock.Setup(x => x.Execute(It.IsAny<RepairRequest>())).ReturnsAsync(repair);
+
+        var result = await systemUnderTest.SaveRepair(repairRequest);
+
+        GetStatusCode(result).Should().Be(200);
+
+
+        saveRepairRequestUseCaseMock.Verify(x => x.Execute(repairRequest), Times.Once);
+    }
+
     [Fact]
     public async Task ReturnsErrorWhenFailsToSave()
     {
@@ -92,76 +89,76 @@ public class RepairRequestsControllerTests : ControllerTests
         saveRepairRequestUseCaseMock.Verify(x => x.Execute(repairRequest), Times.Once);
     }
 
-    //     [Fact]
-    //     public async Task GivenEmailContact_WhenRepair_ThenSendAppointmentConfirmationEmailUseCaseIsCalled()
-    //     {
-    //         //Arrange
-    //         RepairRequest repairRequest = new RepairRequest
-    //         {
-    //             ContactDetails = new RepairContactDetails
-    //             {
-    //                 Type = "email",
-    //                 Value = "dr.who@tardis.com"
-    //             },
-    //             Time = new RepairAvailability
-    //             {
-    //                 Display = "Displayed Time"
-    //             }
-    //         };
-    //         var repair = new Repair()
-    //         {
-    //             Id = new Guid(),
-    //             ContactDetails = new RepairContactDetails
-    //             {
-    //                 Type = "email",
-    //                 Value = "dr.who@tardis.com"
-    //             },
-    //             Time = repairAvailability,
-    //             Address = repairAddress
-    //         };
-    //         saveRepairRequestUseCaseMock.Setup(x => x.Execute(repairRequest)).ReturnsAsync(repair);
-    //
-    //         //Assert
-    //         await systemUnderTest.SaveRepair(repairRequest);
-    //
-    //         //Act
-    //         appointmentConfirmationSender.Verify(x => x.Execute(repair), Times.Once);
-    //     }
-    //
-    //     [Fact]
-    //     public async Task GivenSmsContact_WhenRepair_ThenSendAppointmentConfirmationSmsUseCaseIsCalled()
-    //     {
-    //         //Arrange
-    //         var repairRequest = new RepairRequest()
-    //         {
-    //             ContactDetails = new RepairContactDetails
-    //             {
-    //                 Type = "text",
-    //                 Value = "0765374057"
-    //             },
-    //             Time = new RepairAvailability
-    //             {
-    //                 Display = "Displayed Time"
-    //             }
-    //         };
-    //         var repair = new Repair
-    //         {
-    //             Id = new Guid(),
-    //             ContactDetails = new RepairContactDetails
-    //             {
-    //                 Type = "text",
-    //                 Value = "0765374057"
-    //             },
-    //             Time = repairAvailability,
-    //             Address = repairAddress
-    //         };
-    //
-    //         saveRepairRequestUseCaseMock.Setup(x => x.Execute(repairRequest)).ReturnsAsync(repair);
-    //
-    //         //Act
-    //         await systemUnderTest.SaveRepair(repairRequest);
-    //
-    //         //Assert
-    //         appointmentConfirmationSender.Verify(x => x.Execute(repair), Times.Once);
-    //     }
+    [Fact]
+    public async Task GivenEmailContact_WhenRepair_ThenSendAppointmentConfirmationEmailUseCaseIsCalled()
+    {
+        //Arrange
+        RepairRequest repairRequest = new RepairRequest
+        {
+            ContactDetails = new RepairContactDetails
+            {
+                Type = "email",
+                Value = "dr.who@tardis.com"
+            },
+            Time = new RepairAvailability
+            {
+                Display = "Displayed Time"
+            }
+        };
+        var repair = new Repair()
+        {
+            Id = 1,
+            ContactDetails = new RepairContactDetails
+            {
+                Type = "email",
+                Value = "dr.who@tardis.com"
+            },
+            Time = repairAvailability,
+            Address = repairAddress
+        };
+        saveRepairRequestUseCaseMock.Setup(x => x.Execute(repairRequest)).ReturnsAsync(repair);
+
+        //Assert
+        await systemUnderTest.SaveRepair(repairRequest);
+
+        //Act
+        appointmentConfirmationSender.Verify(x => x.Execute(repair), Times.Once);
+    }
+
+    [Fact]
+    public async Task GivenSmsContact_WhenRepair_ThenSendAppointmentConfirmationSmsUseCaseIsCalled()
+    {
+        //Arrange
+        var repairRequest = new RepairRequest()
+        {
+            ContactDetails = new RepairContactDetails
+            {
+                Type = "text",
+                Value = "0765374057"
+            },
+            Time = new RepairAvailability
+            {
+                Display = "Displayed Time"
+            }
+        };
+        var repair = new Repair
+        {
+            Id = 1,
+            ContactDetails = new RepairContactDetails
+            {
+                Type = "text",
+                Value = "0765374057"
+            },
+            Time = repairAvailability,
+            Address = repairAddress
+        };
+
+        saveRepairRequestUseCaseMock.Setup(x => x.Execute(repairRequest)).ReturnsAsync(repair);
+
+        //Act
+        await systemUnderTest.SaveRepair(repairRequest);
+
+        //Assert
+        appointmentConfirmationSender.Verify(x => x.Execute(repair), Times.Once);
+    }
 }
