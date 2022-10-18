@@ -17,14 +17,12 @@ public class RepairController : ControllerBase
     private readonly IAppointmentConfirmationSender appointmentConfirmationSender;
     private readonly IBookAppointmentUseCase bookAppointmentUseCase;
     private readonly IHashids hasher;
-    private readonly IInternalEmailSender internalEmailSender;
     private readonly ILogger<RepairController> logger;
     private readonly ISaveRepairRequestUseCase saveRepairRequestUseCase;
 
     public RepairController(
         ILogger<RepairController> logger,
         ISaveRepairRequestUseCase saveRepairRequestUseCase,
-        IInternalEmailSender internalEmailSender,
         IAppointmentConfirmationSender appointmentConfirmationSender,
         IBookAppointmentUseCase bookAppointmentUseCase,
         IHashids hasher
@@ -32,7 +30,6 @@ public class RepairController : ControllerBase
     {
         this.logger = logger;
         this.saveRepairRequestUseCase = saveRepairRequestUseCase;
-        this.internalEmailSender = internalEmailSender;
         this.appointmentConfirmationSender = appointmentConfirmationSender;
         this.bookAppointmentUseCase = bookAppointmentUseCase;
         this.hasher = hasher;
@@ -45,8 +42,7 @@ public class RepairController : ControllerBase
         {
             var result = await saveRepairRequestUseCase.Execute(repairRequest);
             await bookAppointmentUseCase.Execute(result);
-            // appointmentConfirmationSender.Execute(result);
-            // await internalEmailSender.Execute(result);
+            appointmentConfirmationSender.Execute(result);
 
             logger.AfterAddRepair(result.Id);
             return Ok(result.GetReference(hasher));
