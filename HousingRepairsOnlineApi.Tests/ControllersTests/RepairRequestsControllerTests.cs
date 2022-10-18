@@ -16,7 +16,6 @@ public class RepairRequestsControllerTests : ControllerTests
 {
     private readonly Mock<IAppointmentConfirmationSender> appointmentConfirmationSender;
     private readonly Mock<IBookAppointmentUseCase> bookAppointmentUseCaseMock;
-    private readonly Mock<IInternalEmailSender> internalEmailSender;
     private readonly RepairAddress repairAddress = new() { LocationId = "Location Id" };
 
     private readonly RepairAvailability repairAvailability = new()

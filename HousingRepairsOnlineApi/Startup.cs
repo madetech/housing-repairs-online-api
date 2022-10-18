@@ -82,10 +82,6 @@ public class Startup
 
         var emailConfirmationTemplateId = GetEnvironmentVariable("CONFIRMATION_EMAIL_NOTIFY_TEMPLATE_ID");
 
-        var internalEmailConfirmationTemplateId = GetEnvironmentVariable("INTERNAL_EMAIL_NOTIFY_TEMPLATE_ID");
-
-        var internalEmail = GetEnvironmentVariable("INTERNAL_EMAIL");
-
         var daysUntilImageExpiry = GetEnvironmentVariable("DAYS_UNTIL_IMAGE_EXPIRY");
 
         services.AddTransient<ISendAppointmentConfirmationSmsUseCase, SendAppointmentConfirmationSmsUseCase>(s =>
@@ -109,15 +105,8 @@ public class Startup
             return new RetrieveImageLinkUseCase(azureStorageGateway, int.Parse(daysUntilImageExpiry));
         });
 
-        services.AddTransient<ISendInternalEmailUseCase, SendInternalEmailUseCase>(s =>
-        {
-            var notifyGateway = s.GetService<INotifyGateway>();
-            return new SendInternalEmailUseCase(notifyGateway, internalEmailConfirmationTemplateId, internalEmail);
-        });
-
         services.AddHousingRepairsOnlineAuthentication(HousingRepairsOnlineApiIssuerId);
         services.AddTransient<ISaveRepairRequestUseCase, SaveRepairRequestUseCase>();
-        services.AddTransient<IInternalEmailSender, InternalEmailSender>();
 
         services.AddTransient<IRepairStorageGateway, PostgresGateway>();
 
