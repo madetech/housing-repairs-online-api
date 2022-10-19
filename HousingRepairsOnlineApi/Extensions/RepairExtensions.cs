@@ -16,7 +16,7 @@ public static class RepairExtensions
             ContactDetails = new ContactDetails
             {
                 Email = repair.ContactDetails.Type == "email" ? repair.ContactDetails.Value : null,
-                MobileNumber = repair.ContactDetails.Type == "tel" ? repair.ContactDetails.Value : null,
+                MobileNumber = repair.ContactDetails.Type == "text" ? repair.ContactDetails.Value : null,
                 PhoneNumber = repair.ContactPersonNumber
             },
             SorCode = repair.SOR,
