@@ -12,7 +12,10 @@ public static class RepairExtensions
         {
             Reference = repair.GetReference(hasher),
             Appointment =
-                new Appointment { StartTime = repair.Time.StartDateTime, EndTime = repair.Time.EndDateTime },
+                new Appointment
+                {
+                    Id = repair.Time.Id, StartTime = repair.Time.StartDateTime, EndTime = repair.Time.EndDateTime
+                },
             ContactDetails = new ContactDetails
             {
                 Email = repair.ContactDetails.Type == "email" ? repair.ContactDetails.Value : null,
