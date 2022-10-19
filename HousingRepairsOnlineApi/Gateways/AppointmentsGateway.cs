@@ -58,6 +58,7 @@ public class AppointmentsGateway : IAppointmentsGateway
 
         request.SetupJwtAuthentication(httpClient, authenticationIdentifier);
 
-        await httpClient.SendAsync(request);
+        var response = await httpClient.SendAsync(request);
+        response.EnsureSuccessStatusCode();
     }
 }
