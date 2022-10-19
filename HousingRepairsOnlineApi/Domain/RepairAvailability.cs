@@ -1,13 +1,13 @@
 ﻿using System;
 
-namespace HousingRepairsOnlineApi.Domain
+namespace HousingRepairsOnlineApi.Domain;
+
+public class RepairAvailability
 {
-    public class RepairAvailability
-    {
-        public DateTime StartDateTime { get; set; }
+    public string Id { get; set; }
+    public DateTime StartDateTime { get; set; }
 
-        public DateTime EndDateTime { get; set; }
+    public DateTime EndDateTime { get; set; }
 
-        public string Display { get; set; }
-    }
+    public string Display { get; set; }
 }
