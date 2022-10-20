@@ -44,7 +44,7 @@ public static class ServiceCollectionExtensions
 
     public static void AddHasher(this IServiceCollection services, string salt)
     {
-        var hasher = new Hashids(salt, 8, "ABCDEFGHIJKLMNPQRSTUVWXYZ123456789");
+        var hasher = new Hashids(salt, 7, "ABCDEFGHIJKLMNPQRSTUVWXYZ123456789");
         services.AddSingleton<IHashids>(hasher);
     }
 }
