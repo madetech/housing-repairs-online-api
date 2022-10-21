@@ -22,8 +22,9 @@ exec: true # Enable running commands in your container.
 #variables:                    # Pass environment variables as key value pairs.
 #  LOG_LEVEL: info
 secrets:
-  DB_USERNAME: "/redbridge/database/username"
-  DB_PASSWORD: "/redbridge/database/password"
+  DB_NAME: /copilot/${COPILOT_APPLICATION_NAME}/${COPILOT_ENVIRONMENT_NAME}/secrets/redbridge.database.name
+  DB_USERNAME: /copilot/${COPILOT_APPLICATION_NAME}/${COPILOT_ENVIRONMENT_NAME}/secrets/redbridge.database.username
+  DB_PASSWORD: /copilot/${COPILOT_APPLICATION_NAME}/${COPILOT_ENVIRONMENT_NAME}/secrets/redbridge.database.password
   GOV_NOTIFY_KEY: "/redbridge/govnotify/apikey"
   HASHIDS_SALT: "/redbridge/hro/customer_reference/salt"
 
@@ -40,7 +41,6 @@ environments:
       ADDRESSES_ORGANISATION_ID: redbridge.development.saas.by.madetech.com
       SCHEDULING_API_URL: http://redbridge-housing-repairs-scheduling-api.development.saas.local
       # Database
-      DB_NAME: RedbridgeDluhcHousingRepairs
       DB_HOST: postgres.development.infrastructure.local
       # Azure specific environment variables need to be removed
       AZURE_STORAGE_CONNECTION_STRING: FOO
@@ -48,11 +48,32 @@ environments:
       CONFIRMATION_SMS_NOTIFY_TEMPLATE_ID: 6ba51f94-5855-413a-b56f-11f99a2f492d
       CONFIRMATION_EMAIL_NOTIFY_TEMPLATE_ID: d2e9799d-6280-4413-b957-41c84868c343
       DAYS_UNTIL_IMAGE_EXPIRY: 5
-  # production:
-  #   exec: false
-
     network:
       vpc:
         security_groups:
           deny_default: false
           groups: [sg-02c845b61c1cb0381, sg-02d1efa0cb74b1a77]
+
+  production:
+    exec: false
+    variables:
+      AUTHENTICATION_IDENTIFIER: FOO
+      JWT_SECRET: FOO
+      ADDRESSES_API_URL: http://redbridge-housing-repairs-hms-api.production.saas.local
+      SCHEDULING_API_URL: http://redbridge-housing-repairs-scheduling-api.production.saas.local
+      # Database
+      DB_HOST: postgres.production.infrastructure.local
+      # Azure specific environment variables need to be removed
+      AZURE_STORAGE_CONNECTION_STRING: FOO
+      STORAGE_CONTAINER_NAME: FOO
+      GOV_NOTIFY_KEY: FOO
+      CONFIRMATION_SMS_NOTIFY_TEMPLATE_ID: FOO
+      CONFIRMATION_EMAIL_NOTIFY_TEMPLATE_ID: FOO
+      INTERNAL_EMAIL_NOTIFY_TEMPLATE_ID: FOO
+      INTERNAL_EMAIL: FOO
+      DAYS_UNTIL_IMAGE_EXPIRY: FOO
+    network:
+      vpc:
+        security_groups:
+          deny_default: false
+          groups: [sg-08d5e199bc4a36b9d, sg-0288b0912f1ef891a]
