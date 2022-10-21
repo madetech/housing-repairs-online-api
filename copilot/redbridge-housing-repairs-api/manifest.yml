@@ -59,7 +59,8 @@ environments:
     variables:
       AUTHENTICATION_IDENTIFIER: FOO
       JWT_SECRET: FOO
-      ADDRESSES_API_URL: http://redbridge-housing-repairs-hms-api.production.saas.local
+      ADDRESSES_API_URL: http://rnd-buildings-register.development.saas.local:3010
+      ADDRESSES_ORGANISATION_ID: redbridge.development.saas.by.madetech.com
       SCHEDULING_API_URL: http://redbridge-housing-repairs-scheduling-api.production.saas.local
       # Database
       DB_HOST: postgres.production.infrastructure.local
@@ -67,11 +68,9 @@ environments:
       AZURE_STORAGE_CONNECTION_STRING: FOO
       STORAGE_CONTAINER_NAME: FOO
       GOV_NOTIFY_KEY: FOO
-      CONFIRMATION_SMS_NOTIFY_TEMPLATE_ID: FOO
-      CONFIRMATION_EMAIL_NOTIFY_TEMPLATE_ID: FOO
-      INTERNAL_EMAIL_NOTIFY_TEMPLATE_ID: FOO
-      INTERNAL_EMAIL: FOO
-      DAYS_UNTIL_IMAGE_EXPIRY: FOO
+      CONFIRMATION_SMS_NOTIFY_TEMPLATE_ID: 6ba51f94-5855-413a-b56f-11f99a2f492d
+      CONFIRMATION_EMAIL_NOTIFY_TEMPLATE_ID: d2e9799d-6280-4413-b957-41c84868c343
+      DAYS_UNTIL_IMAGE_EXPIRY: 5
     network:
       vpc:
         security_groups:
