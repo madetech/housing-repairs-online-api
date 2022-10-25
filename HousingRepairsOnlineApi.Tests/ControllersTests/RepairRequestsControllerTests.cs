@@ -117,10 +117,10 @@ public class RepairRequestsControllerTests : ControllerTests
         };
         saveRepairRequestUseCaseMock.Setup(x => x.Execute(repairRequest)).ReturnsAsync(repair);
 
-        //Assert
+        //Act
         await systemUnderTest.SaveRepair(repairRequest);
 
-        //Act
+        //Assert
         appointmentConfirmationSender.Verify(x => x.Execute(repair), Times.Once);
     }
 

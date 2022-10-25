@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using HashidsNet;
 using HousingRepairsOnlineApi.Domain;
+using HousingRepairsOnlineApi.Dtos;
 using HousingRepairsOnlineApi.Extensions;
 using HousingRepairsOnlineApi.Helpers;
 using HousingRepairsOnlineApi.UseCases;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
 using Microsoft.Extensions.Logging;
 
 namespace HousingRepairsOnlineApi.Controllers;
@@ -42,10 +45,20 @@ public class RepairController : ControllerBase
         {
             var result = await saveRepairRequestUseCase.Execute(repairRequest);
             await bookAppointmentUseCase.Execute(result);
-            appointmentConfirmationSender.Execute(result);
+            bool govNotifySuccess;
+            try
+            {
+                appointmentConfirmationSender.Execute(result);
+                govNotifySuccess = true;
+            }
+            catch(Exception ex)
+            {
+                govNotifySuccess = false;
+            }
 
+            var response = new SaveRepairResponse(result.GetReference(hasher), govNotifySuccess);
             logger.AfterAddRepair(result.Id);
-            return Ok(result.GetReference(hasher));
+            return Ok(response);
         }
         catch (Exception ex)
         {
