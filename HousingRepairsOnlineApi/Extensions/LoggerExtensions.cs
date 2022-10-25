@@ -26,6 +26,11 @@ public static class LoggerExtensions
             .Define(
                 LogLevel.Error, 4, "Failed to fetch appointments");
 
+    private static readonly Action<ILogger, string, Exception> ErrorSendingGovNotifyNotificationDefinition =
+        LoggerMessage
+            .Define<string>(
+                LogLevel.Error, 5, "Failed to send GovNotify notification for reference {Ref}");
+
     public static void AfterAddRepair(this ILogger logger, int repairId)
     {
         SaveRepairMessageDefinition(logger, repairId, null);
@@ -44,5 +49,10 @@ public static class LoggerExtensions
     public static void ErrorRetrievingAppointments(this ILogger logger, Exception ex)
     {
         ErrorRetrievingAppointmentsDefinition(logger, ex);
+    }
+
+    public static void ErrorSendingGovNotifyNotification(this ILogger logger, string reference, Exception ex)
+    {
+        ErrorSendingGovNotifyNotificationDefinition(logger, reference, ex);
     }
 }
