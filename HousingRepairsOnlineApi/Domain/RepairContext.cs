@@ -10,6 +10,6 @@ public class RepairContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Repair>().ToTable("repair");
+        modelBuilder.Entity<Repair>().ToTable("repair").Property(r => r.CreatedAt).HasDefaultValueSql("now()");
     }
 }
