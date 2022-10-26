@@ -6,7 +6,7 @@ namespace HousingRepairsOnlineApi.Domain;
 
 public class Repair
 {
-    private static readonly string ReferencePrefix = "CC";
+    private const string ReferencePrefix = "CC";
 
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -23,11 +23,11 @@ public class Repair
 
     [Column(TypeName = "jsonb")] public RepairIssue Issue { get; set; }
 
-    public string ContactPersonNumber { get; set; }
+    [NotMapped] public string ContactPersonNumber { get; set; }
 
     [Column(TypeName = "jsonb")] public RepairDescription Description { get; set; }
 
-    [Column(TypeName = "jsonb")] public RepairContactDetails ContactDetails { get; set; }
+    [NotMapped] public RepairContactDetails ContactDetails { get; set; }
 
     [Column(TypeName = "jsonb")] public RepairAvailability Time { get; set; }
 

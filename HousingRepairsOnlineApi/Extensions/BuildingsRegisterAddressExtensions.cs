@@ -17,7 +17,6 @@ public static class BuildingsRegisterAddressExtensions
             AddressLine1 = address.Line1,
             AddressLine2 = address.Line2,
             PostCode = address.Postcode,
-            // TODO: Throw Exception if no UPRN found
             LocationId = address.Uprns.Find(uprn => uprn.Type == "INTERNAL")?.Value
         });
     }
