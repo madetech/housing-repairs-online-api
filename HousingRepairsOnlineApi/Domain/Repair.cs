@@ -6,6 +6,8 @@ namespace HousingRepairsOnlineApi.Domain;
 
 public class Repair
 {
+    private static readonly string ReferencePrefix = "CC";
+
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
@@ -31,6 +33,6 @@ public class Repair
 
     public string GetReference(IHashids hasher)
     {
-        return hasher.Encode(Id);
+        return string.Concat(ReferencePrefix, hasher.Encode(Id));
     }
 }
