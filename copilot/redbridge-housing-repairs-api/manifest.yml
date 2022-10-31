@@ -27,13 +27,13 @@ secrets:
   DB_PASSWORD: /copilot/${COPILOT_APPLICATION_NAME}/${COPILOT_ENVIRONMENT_NAME}/secrets/redbridge.database.password
   GOV_NOTIFY_KEY: "/redbridge/govnotify/apikey"
   HASHIDS_SALT: "/redbridge/hro/customer_reference/salt"
+
+variables:
   ADDRESSES_API_URL: http://rnd-buildings-register.${COPILOT_ENVIRONMENT_NAME}.saas.local:3010
   ADDRESSES_ORGANISATION_ID: redbridge.${COPILOT_ENVIRONMENT_NAME}.saas.by.madetech.com
   SCHEDULING_API_URL: http://redbridge-housing-repairs-scheduling-api.${COPILOT_ENVIRONMENT_NAME}.saas.local
   # Database
   DB_HOST: postgres.${COPILOT_ENVIRONMENT_NAME}.infrastructure.local
-
-  # You can refer to a specific key in the JSON blob.
 
 # You can override any of the values defined above by environment.
 # NOTE!!!: Environment variables set here are for test purposes, secrets should be set using SSM or similar
