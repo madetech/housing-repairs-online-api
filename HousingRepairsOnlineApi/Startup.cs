@@ -19,8 +19,6 @@ namespace HousingRepairsOnlineApi;
 
 public class Startup
 {
-    private const string HousingRepairsOnlineApiIssuerId = "Housing Repairs Online Api";
-
     public Startup(IConfiguration configuration)
     {
         Configuration = configuration;
@@ -66,7 +64,7 @@ public class Startup
             var httpClient = s.GetService<HttpClient>();
             httpClient.BaseAddress = new Uri(schedulingApiUrl);
             var hasher = s.GetService<IHashids>();
-            return new AppointmentsGateway(httpClient, authenticationIdentifier, hasher);
+            return new AppointmentsGateway(httpClient, hasher);
         });
 
         var notifyApiKey = GetEnvironmentVariable("GOV_NOTIFY_KEY");

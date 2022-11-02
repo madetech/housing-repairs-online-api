@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
-using HACT.Dtos;
+using HousingRepairsOnlineApi.Dtos;
 using HousingRepairsOnlineApi.Gateways;
 using HousingRepairsOnlineApi.Helpers;
 using HousingRepairsOnlineApi.UseCases;
@@ -150,12 +150,13 @@ public class RetrieveAvailableAppointmentsUseCaseTests
         sorEngineMock.Setup(x => x.MapSorCode(kitchen, cupboards, doorHangingOff)).Returns(repairCode);
 
         appointmentsGatewayMock.Setup(x => x.GetAvailableAppointments(repairCode, "uprn", null))
-            .ReturnsAsync(new List<Appointment>
+            .ReturnsAsync(new List<AppointmentDto>
             {
                 new()
                 {
-                    Reference = new Reference { ID = "1" },
-                    TimeOfDay = new TimeOfDay { EarliestArrivalTime = startTime, LatestArrivalTime = endTime }
+                    Id = "1",
+                    StartTime = startTime,
+                    EndTime = endTime,
                 }
             });
 
