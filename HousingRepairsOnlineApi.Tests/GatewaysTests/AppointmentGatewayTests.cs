@@ -2,8 +2,8 @@
 using System.Net;
 using System.Threading.Tasks;
 using FluentAssertions;
-using HACT.Dtos;
 using HashidsNet;
+using HousingRepairsOnlineApi.Dtos;
 using HousingRepairsOnlineApi.Gateways;
 using Newtonsoft.Json;
 using RichardSzalay.MockHttp;
@@ -25,7 +25,7 @@ public class AppointmentGatewayTests
         httpClient.BaseAddress = new Uri(SchedulingApiEndpoint);
         var hasher = new Hashids("salty");
 
-        systemUnderTest = new AppointmentsGateway(httpClient, authenticationIdentifier, hasher);
+        systemUnderTest = new AppointmentsGateway(httpClient, hasher);
     }
 
     [Fact]
@@ -55,14 +55,11 @@ public class AppointmentGatewayTests
         var year = 2021;
         var month = 01;
         var day = 01;
-        var expected = new Appointment
+        var expected = new AppointmentDto()
         {
-            Date = new DateTime(year, month, day),
-            TimeOfDay = new TimeOfDay
-            {
-                EarliestArrivalTime = new DateTime(year, month, day, 8, 0, 0),
-                LatestArrivalTime = new DateTime(year, month, day, 12, 0, 0)
-            }
+            Id = "1",
+            StartTime = new DateTime(year, month, day, 8, 0, 0),
+            EndTime = new DateTime(year, month, day, 12, 0, 0)
         };
 
         mockHttp.Expect($"/Appointments/AvailableAppointments?sorCode={SorCode}&locationId={LocationId}")

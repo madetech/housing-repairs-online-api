@@ -7,27 +7,25 @@ using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using HACT.Dtos;
 using HashidsNet;
 using HousingRepairsOnlineApi.Domain;
+using HousingRepairsOnlineApi.Dtos;
 using HousingRepairsOnlineApi.Extensions;
 
 namespace HousingRepairsOnlineApi.Gateways;
 
 public class AppointmentsGateway : IAppointmentsGateway
 {
-    private readonly string authenticationIdentifier;
     private readonly IHashids hasher;
     private readonly HttpClient httpClient;
 
-    public AppointmentsGateway(HttpClient httpClient, string authenticationIdentifier, IHashids hasher)
+    public AppointmentsGateway(HttpClient httpClient, IHashids hasher)
     {
         this.httpClient = httpClient;
-        this.authenticationIdentifier = authenticationIdentifier;
         this.hasher = hasher;
     }
 
-    public async Task<IEnumerable<Appointment>> GetAvailableAppointments(string sorCode, string locationId,
+    public async Task<IEnumerable<AppointmentDto>> GetAvailableAppointments(string sorCode, string locationId,
         DateTime? fromDate = null)
     {
         var request = new HttpRequestMessage(HttpMethod.Get,
@@ -35,10 +33,10 @@ public class AppointmentsGateway : IAppointmentsGateway
 
         var response = await httpClient.SendAsync(request);
 
-        var result = Enumerable.Empty<Appointment>();
+        var result = Enumerable.Empty<AppointmentDto>();
         if (response.StatusCode == HttpStatusCode.OK)
         {
-            result = await response.Content.ReadFromJsonAsync<List<Appointment>>();
+            result = await response.Content.ReadFromJsonAsync<List<AppointmentDto>>();
         }
 
         return result;

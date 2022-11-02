@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Ardalis.GuardClauses;
-using HACT.Dtos;
+using HousingRepairsOnlineApi.Dtos;
 using HousingRepairsOnlineApi.Gateways;
 using HousingRepairsOnlineApi.Helpers;
 using ApplicationTime = HousingRepairsOnlineApi.Domain.AppointmentTime;
@@ -31,17 +31,17 @@ public class RetrieveAvailableAppointmentsUseCase : IRetrieveAvailableAppointmen
 
 
         var result = await appointmentsGateway.GetAvailableAppointments(repairCode, locationId, fromDate);
-        var convertedResults = result.Select(ConvertToHactAppointment).ToList();
+        var convertedResults = result.Select(ConvertFromAppointmentDto).ToList();
 
         return convertedResults;
 
-        ApplicationTime ConvertToHactAppointment(Appointment appointment)
+        ApplicationTime ConvertFromAppointmentDto(AppointmentDto appointment)
         {
             return new ApplicationTime
             {
-                Id = appointment.Reference.ID,
-                StartTime = appointment.TimeOfDay.EarliestArrivalTime,
-                EndTime = appointment.TimeOfDay.LatestArrivalTime
+                Id = appointment.Id,
+                StartTime = appointment.StartTime,
+                EndTime = appointment.EndTime,
             };
         }
     }
