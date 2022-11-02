@@ -2,7 +2,6 @@
 using System.Net.Http;
 using Azure.Storage.Blobs;
 using HashidsNet;
-using HousingRepairsOnline.Authentication.DependencyInjection;
 using HousingRepairsOnlineApi.Domain;
 using HousingRepairsOnlineApi.Gateways;
 using HousingRepairsOnlineApi.Helpers;
@@ -105,7 +104,6 @@ public class Startup
             return new RetrieveImageLinkUseCase(azureStorageGateway, int.Parse(daysUntilImageExpiry));
         });
 
-        services.AddHousingRepairsOnlineAuthentication(HousingRepairsOnlineApiIssuerId);
         services.AddTransient<ISaveRepairRequestUseCase, SaveRepairRequestUseCase>();
 
         services.AddTransient<IRepairStorageGateway, PostgresGateway>();
@@ -123,7 +121,6 @@ public class Startup
         services.AddSwaggerGen(c =>
         {
             c.SwaggerDoc("v1", new OpenApiInfo { Title = "HousingRepairsOnlineApi", Version = "v1" });
-            c.AddJwtSecurityScheme();
         });
 
         var storageConnectionString = Environment.GetEnvironmentVariable("AZURE_STORAGE_CONNECTION_STRING");
