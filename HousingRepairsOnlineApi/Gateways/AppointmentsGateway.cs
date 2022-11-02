@@ -9,7 +9,6 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using HACT.Dtos;
 using HashidsNet;
-using HousingRepairsOnline.Authentication.Helpers;
 using HousingRepairsOnlineApi.Domain;
 using HousingRepairsOnlineApi.Extensions;
 
@@ -34,8 +33,6 @@ public class AppointmentsGateway : IAppointmentsGateway
         var request = new HttpRequestMessage(HttpMethod.Get,
             $"/Appointments/AvailableAppointments?sorCode={sorCode}&locationId={locationId}&fromDate={fromDate}");
 
-        request.SetupJwtAuthentication(httpClient, authenticationIdentifier);
-
         var response = await httpClient.SendAsync(request);
 
         var result = Enumerable.Empty<Appointment>();
@@ -55,8 +52,6 @@ public class AppointmentsGateway : IAppointmentsGateway
         request.Content = new StringContent(
             JsonSerializer.Serialize(repair.ToBookAppointmentRequest(hasher)), Encoding.UTF8,
             "application/json");
-
-        request.SetupJwtAuthentication(httpClient, authenticationIdentifier);
 
         var response = await httpClient.SendAsync(request);
         response.EnsureSuccessStatusCode();
