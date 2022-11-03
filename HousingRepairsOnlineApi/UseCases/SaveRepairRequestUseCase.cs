@@ -1,62 +1,43 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using HousingRepairsOnlineApi.Domain;
 using HousingRepairsOnlineApi.Gateways;
 using HousingRepairsOnlineApi.Helpers;
-using Microsoft.Extensions.Logging;
 
-namespace HousingRepairsOnlineApi.UseCases
+namespace HousingRepairsOnlineApi.UseCases;
+
+public class SaveRepairRequestUseCase : ISaveRepairRequestUseCase
 {
-    public class SaveRepairRequestUseCase : ISaveRepairRequestUseCase
+    private readonly IRepairStorageGateway repairStorageGateway;
+    private readonly ISoREngine sorEngine;
+
+    public SaveRepairRequestUseCase(IRepairStorageGateway repairStorageGateway, ISoREngine sorEngine)
+
     {
-        private readonly IRepairStorageGateway repairStorageGateway;
-        private readonly IBlobStorageGateway storageGateway;
-        private readonly ISoREngine sorEngine;
+        this.repairStorageGateway = repairStorageGateway;
+        this.sorEngine = sorEngine;
+    }
 
-        public SaveRepairRequestUseCase(IRepairStorageGateway repairStorageGateway, IBlobStorageGateway storageGateway, ISoREngine sorEngine)
-
+    public async Task<Repair> Execute(RepairRequest repairRequest)
+    {
+        var repair = new Repair
         {
-            this.repairStorageGateway = repairStorageGateway;
-            this.storageGateway = storageGateway;
-            this.sorEngine = sorEngine;
-        }
+            Address = repairRequest.Address,
+            Postcode = repairRequest.Postcode,
+            Location = repairRequest.Location,
+            ContactDetails = repairRequest.ContactDetails,
+            Problem = repairRequest.Problem,
+            Issue = repairRequest.Issue,
+            ContactPersonNumber = repairRequest.ContactPersonNumber,
+            Time = repairRequest.Time,
+            Description = new RepairDescription { Text = repairRequest.Description.Text },
+            SOR = sorEngine.MapSorCode(
+                repairRequest.Location.Value,
+                repairRequest.Problem.Value,
+                repairRequest.Issue?.Value)
+        };
 
-        public async Task<Repair> Execute(RepairRequest repairRequest)
-        {
+        var savedRequest = await repairStorageGateway.AddRepair(repair);
 
-            var repair = new Repair
-            {
-                Address = repairRequest.Address,
-                Postcode = repairRequest.Postcode,
-                Location = repairRequest.Location,
-                ContactDetails = repairRequest.ContactDetails,
-                Problem = repairRequest.Problem,
-                Issue = repairRequest.Issue,
-                ContactPersonNumber = repairRequest.ContactPersonNumber,
-                Time = repairRequest.Time,
-                Description = new RepairDescription
-                {
-                    Text = repairRequest.Description.Text,
-                },
-                SOR = sorEngine.MapSorCode(
-                    repairRequest.Location.Value,
-                    repairRequest.Problem.Value,
-                    repairRequest.Issue?.Value)
-            };
-
-            if (!string.IsNullOrEmpty(repairRequest.Description.Base64Img))
-            {
-                var photoUrl = storageGateway.UploadBlob(
-                    repairRequest.Description.Base64Img,
-                    repairRequest.Description.FileExtension
-                ).Result;
-                repair.Description.PhotoUrl = photoUrl;
-
-            }
-
-            var savedRequest = await repairStorageGateway.AddRepair(repair);
-
-            return savedRequest;
-        }
+        return savedRequest;
     }
 }

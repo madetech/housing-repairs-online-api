@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Net.Http;
-using Azure.Storage.Blobs;
 using HashidsNet;
 using HousingRepairsOnlineApi.Domain;
 using HousingRepairsOnlineApi.Gateways;
@@ -75,10 +74,7 @@ public class Startup
             }
         );
         var smsConfirmationTemplateId = GetEnvironmentVariable("CONFIRMATION_SMS_NOTIFY_TEMPLATE_ID");
-
         var emailConfirmationTemplateId = GetEnvironmentVariable("CONFIRMATION_EMAIL_NOTIFY_TEMPLATE_ID");
-
-        var daysUntilImageExpiry = GetEnvironmentVariable("DAYS_UNTIL_IMAGE_EXPIRY");
 
         services.AddTransient<ISendAppointmentConfirmationSmsUseCase, SendAppointmentConfirmationSmsUseCase>(s =>
         {
@@ -94,25 +90,8 @@ public class Startup
             });
 
         services.AddTransient<IAppointmentConfirmationSender, AppointmentConfirmationSender>();
-
-        services.AddTransient<IRetrieveImageLinkUseCase, RetrieveImageLinkUseCase>(s =>
-        {
-            var azureStorageGateway = s.GetService<IBlobStorageGateway>();
-            return new RetrieveImageLinkUseCase(azureStorageGateway, int.Parse(daysUntilImageExpiry));
-        });
-
         services.AddTransient<ISaveRepairRequestUseCase, SaveRepairRequestUseCase>();
-
         services.AddTransient<IRepairStorageGateway, PostgresGateway>();
-
-        //var blobContainerClient = GetBlobContainerClient();
-
-        services.AddTransient<IBlobStorageGateway, AzureStorageGateway>(s =>
-        {
-            return new AzureStorageGateway(
-                // blobContainerClient
-            );
-        });
 
         services.AddControllers();
         services.AddSwaggerGen(c =>
@@ -120,23 +99,7 @@ public class Startup
             c.SwaggerDoc("v1", new OpenApiInfo { Title = "HousingRepairsOnlineApi", Version = "v1" });
         });
 
-        var storageConnectionString = Environment.GetEnvironmentVariable("AZURE_STORAGE_CONNECTION_STRING");
-        var blobContainerName = Environment.GetEnvironmentVariable("STORAGE_CONTAINER_NAME");
-
         services.AddHealthChecks();
-        //     .AddUrlGroup(new Uri(@$"{addressesApiUrl}/health"), "Addresses API")
-        //     .AddUrlGroup(new Uri(@$"{schedulingApiUrl}/health"), "Scheduling API")
-        //     .AddAzureBlobStorage(storageConnectionString, blobContainerName, name: "Azure Blob Storage");
-    }
-
-    private static BlobContainerClient GetBlobContainerClient()
-    {
-        var storageConnectionString = Environment.GetEnvironmentVariable("AZURE_STORAGE_CONNECTION_STRING");
-        var blobContainerName = Environment.GetEnvironmentVariable("STORAGE_CONTAINER_NAME");
-
-        var blobServiceClient = new BlobServiceClient(storageConnectionString);
-        var blobContainerClient = blobServiceClient.GetBlobContainerClient(blobContainerName);
-        return blobContainerClient;
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
