@@ -13,7 +13,6 @@ namespace HousingRepairsOnlineApi.Tests.GatewaysTests;
 
 public class AppointmentGatewayTests
 {
-    private const string authenticationIdentifier = "super secret";
     private const string SchedulingApiEndpoint = "https://our-proxy-scheduling.api";
     private readonly MockHttpMessageHandler mockHttp;
     private readonly AppointmentsGateway systemUnderTest;
@@ -55,7 +54,7 @@ public class AppointmentGatewayTests
         var year = 2021;
         var month = 01;
         var day = 01;
-        var expected = new AppointmentDto()
+        var expected = new AppointmentDto
         {
             Id = "1",
             StartTime = new DateTime(year, month, day, 8, 0, 0),

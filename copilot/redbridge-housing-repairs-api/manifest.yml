@@ -36,8 +36,6 @@ variables:
 environments:
   development:
     variables:
-      AUTHENTICATION_IDENTIFIER: FOO
-      JWT_SECRET: FOO
       # Azure specific environment variables need to be removed
       AZURE_STORAGE_CONNECTION_STRING: FOO
       STORAGE_CONTAINER_NAME: FOO
@@ -54,8 +52,6 @@ environments:
   production:
     exec: false
     variables:
-      AUTHENTICATION_IDENTIFIER: FOO
-      JWT_SECRET: FOO
       # Azure specific environment variables need to be removed
       AZURE_STORAGE_CONNECTION_STRING: FOO
       STORAGE_CONTAINER_NAME: FOO
