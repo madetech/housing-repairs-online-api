@@ -53,7 +53,7 @@ public class SaveRepairRequestUseCaseTests
 
         mockSorEngine.Verify(x => x.MapSorCode(Location, Problem, Issue), Times.Once);
         mockRepairStorageGateway.Verify(
-            x => x.AddRepair(It.Is<Repair>(p => p.SOR == RepairCode && p.Description.PhotoUrl == ImgUrl)), Times.Once);
+            x => x.AddRepair(It.Is<Repair>(p => p.SOR == RepairCode)), Times.Once);
     }
 
     [Fact]
