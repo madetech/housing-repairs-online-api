@@ -28,6 +28,8 @@ secrets:
 variables:
   ADDRESSES_API_URL: http://rnd-buildings-register.${COPILOT_ENVIRONMENT_NAME}.saas.local:3010
   SCHEDULING_API_URL: http://redbridge-housing-repairs-scheduling-api.${COPILOT_ENVIRONMENT_NAME}.saas.local
+  CONFIRMATION_SMS_NOTIFY_TEMPLATE_ID: 6ba51f94-5855-413a-b56f-11f99a2f492d
+  CONFIRMATION_EMAIL_NOTIFY_TEMPLATE_ID: d2e9799d-6280-4413-b957-41c84868c343
   # Database
   DB_HOST: postgres.${COPILOT_ENVIRONMENT_NAME}.infrastructure.local
 
@@ -36,12 +38,6 @@ variables:
 environments:
   development:
     variables:
-      # Azure specific environment variables need to be removed
-      AZURE_STORAGE_CONNECTION_STRING: FOO
-      STORAGE_CONTAINER_NAME: FOO
-      CONFIRMATION_SMS_NOTIFY_TEMPLATE_ID: 6ba51f94-5855-413a-b56f-11f99a2f492d
-      CONFIRMATION_EMAIL_NOTIFY_TEMPLATE_ID: d2e9799d-6280-4413-b957-41c84868c343
-      DAYS_UNTIL_IMAGE_EXPIRY: 5
       ADDRESSES_ORGANISATION_ID: redbridge.${COPILOT_ENVIRONMENT_NAME}.saas.by.madetech.com
     network:
       vpc:
@@ -52,12 +48,6 @@ environments:
   production:
     exec: false
     variables:
-      # Azure specific environment variables need to be removed
-      AZURE_STORAGE_CONNECTION_STRING: FOO
-      STORAGE_CONTAINER_NAME: FOO
-      CONFIRMATION_SMS_NOTIFY_TEMPLATE_ID: 6ba51f94-5855-413a-b56f-11f99a2f492d
-      CONFIRMATION_EMAIL_NOTIFY_TEMPLATE_ID: d2e9799d-6280-4413-b957-41c84868c343
-      DAYS_UNTIL_IMAGE_EXPIRY: 5
       ADDRESSES_ORGANISATION_ID: housingrepairs.redbridge.gov.uk
     network:
       vpc:
