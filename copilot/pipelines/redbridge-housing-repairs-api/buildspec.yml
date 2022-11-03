@@ -1,9 +1,5 @@
 # Buildspec runs in the build stage of your pipeline.
 version: 0.2
-env:
-  parameter-store:
-    GITHUB_USERNAME: "/redbridge/github/nuget/user"
-    GITHUB_TOKEN: "/redbridge/github/nuget/pat"
 phases:
   install:
     runtime-versions:
@@ -19,8 +15,6 @@ phases:
       - chmod +x ./copilot-linux
   build:
     commands:
-      - echo "Setup"
-      - dotnet nuget add source --username $GITHUB_USERNAME --password $GITHUB_TOKEN --store-password-in-clear-text --name github "https://nuget.pkg.github.com/City-of-Lincoln-Council/index.json"
       - echo "Linting"
       - echo "Running tests"
       - dotnet test --logger:"console;verbosity=detailed"
