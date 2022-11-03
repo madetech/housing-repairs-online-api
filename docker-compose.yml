@@ -16,7 +16,6 @@ services:
       DB_PASSWORD: password
       DB_HOST: postgres
       DB_NAME: repairs
-      AUTHENTICATION_IDENTIFIER: FOO
 
   postgres:
     image: library/postgres:12
@@ -32,8 +31,6 @@ services:
       context: ../HousingRepairsSchedulingApi
     env_file:
       - ../HousingRepairsSchedulingApi/.env
-    environment:
-      AUTHENTICATION_IDENTIFIER: FOO
 
   buildings-register-simulator:
     build:
@@ -46,6 +43,5 @@ services:
       context: ../housing-repairs-online-frontend
     environment:
       REPAIRS_API_BASE_URL: http://repairs-api
-      REPAIRS_API_IDENTIFIER: FOO
     ports:
       - "3000:3000"
