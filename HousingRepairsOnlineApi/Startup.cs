@@ -39,7 +39,6 @@ public class Startup
         var addressesApiUrl = GetEnvironmentVariable("ADDRESSES_API_URL");
         var addressesOrganisationId = GetEnvironmentVariable("ADDRESSES_ORGANISATION_ID");
         var schedulingApiUrl = GetEnvironmentVariable("SCHEDULING_API_URL");
-        var authenticationIdentifier = GetEnvironmentVariable("AUTHENTICATION_IDENTIFIER");
         services.AddHttpClient();
 
         services.AddDbContext<RepairContext>(options =>
