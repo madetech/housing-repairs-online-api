@@ -9,7 +9,6 @@ namespace HousingRepairsOnlineApi.Tests.UseCasesTests;
 
 public class SaveRepairRequestUseCaseTests
 {
-    private readonly Mock<IBlobStorageGateway> mockAzureStorageGateway;
     private readonly Mock<IRepairStorageGateway> mockRepairStorageGateway;
     private readonly Mock<ISoREngine> mockSorEngine;
     private readonly SaveRepairRequestUseCase systemUnderTest;
@@ -18,10 +17,8 @@ public class SaveRepairRequestUseCaseTests
     {
         mockSorEngine = new Mock<ISoREngine>();
         mockRepairStorageGateway = new Mock<IRepairStorageGateway>();
-        mockAzureStorageGateway = new Mock<IBlobStorageGateway>();
         systemUnderTest = new SaveRepairRequestUseCase(
             mockRepairStorageGateway.Object,
-            mockAzureStorageGateway.Object,
             mockSorEngine.Object
         );
     }
@@ -49,15 +46,11 @@ public class SaveRepairRequestUseCaseTests
         mockSorEngine.Setup(x => x.MapSorCode(Location, Problem, Issue))
             .Returns(RepairCode);
 
-        mockAzureStorageGateway.Setup(x => x.UploadBlob(Base64Img, FileExtension))
-            .ReturnsAsync(ImgUrl);
-
         mockRepairStorageGateway.Setup(x => x.AddRepair(It.IsAny<Repair>()))
             .ReturnsAsync((Repair r) => r);
 
         var _ = await systemUnderTest.Execute(repairRequest);
 
-        mockAzureStorageGateway.Verify(x => x.UploadBlob(Base64Img, FileExtension), Times.Once);
         mockSorEngine.Verify(x => x.MapSorCode(Location, Problem, Issue), Times.Once);
         mockRepairStorageGateway.Verify(
             x => x.AddRepair(It.Is<Repair>(p => p.SOR == RepairCode && p.Description.PhotoUrl == ImgUrl)), Times.Once);
@@ -90,6 +83,5 @@ public class SaveRepairRequestUseCaseTests
         mockSorEngine.Verify(x => x.MapSorCode(Location, Problem, Issue), Times.Once);
         mockRepairStorageGateway.Verify(
             x => x.AddRepair(It.Is<Repair>(p => p.SOR == RepairCode && p.Description.PhotoUrl == null)), Times.Once);
-        mockAzureStorageGateway.Verify(x => x.UploadBlob(null, null), Times.Never());
     }
 }
