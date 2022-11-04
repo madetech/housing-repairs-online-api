@@ -181,7 +181,7 @@
     },
     "garage": {
       "doorDamage": "326105",
-      "lockDamage": "326106",
+      "lockDamage": "326105",
       "brokenInto": "324123",
       "roofIssueOrLeak": "223011"
     },
