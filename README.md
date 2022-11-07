@@ -15,3 +15,7 @@ Before running any copilot commands run this
 1. `mv sample.env .env`
 2. Set values in `.env`
 3. `make run`
+
+## Environment Variables
+
+Variables which are used for running the service in isolated (without connected services) are stored in the `.env`, whereas variables needed for communicating with other services are stored in `docker-compose.yml`
