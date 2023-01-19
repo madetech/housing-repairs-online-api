@@ -38,6 +38,12 @@ services:
     ports:
       - "3010:3010"
 
+  hact-scheduler-simulator:
+    build:
+      context: ./schedulers
+    ports:
+      - '3002:3002'
+
   frontend:
     build:
       context: ../housing-repairs-online-frontend
