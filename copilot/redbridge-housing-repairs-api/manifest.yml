@@ -39,6 +39,7 @@ environments:
   development:
     variables:
       ADDRESSES_ORGANISATION_ID: redbridge.${COPILOT_ENVIRONMENT_NAME}.saas.by.madetech.com
+      ADDRESSES_API_URL: https://buildings-register.redbridge.development.saas.by.madetech.com
     network:
       vpc:
         security_groups:
