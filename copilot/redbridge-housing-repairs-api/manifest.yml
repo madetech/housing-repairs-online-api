@@ -50,6 +50,7 @@ environments:
     exec: false
     variables:
       ADDRESSES_ORGANISATION_ID: housingrepairs.redbridge.gov.uk
+      ADDRESSES_API_URL: https://buildings-register.redbridge.production.saas.by.madetech.com
     network:
       vpc:
         security_groups:
